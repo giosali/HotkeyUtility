@@ -3,6 +3,21 @@
   <PropertyGroup>
     <TargetFramework>net5.0-windows</TargetFramework>
 	<UseWPF>true</UseWPF>
+	<Authors>Giovanni Salinas</Authors>
+	<Description>A simple library for setting and managing global hotkeys for WPF</Description>
+	<PackageLicenseExpression>MIT</PackageLicenseExpression>
+	<PackageProjectUrl></PackageProjectUrl>
+	<RepositoryUrl>https://github.com/giosali/HotkeyUtility</RepositoryUrl>
+	<PackageTags>Hotkey, Register, Global, Keyboard, Shortcut</PackageTags>
+	<PackageIcon>HotkeyUtility-icon.png</PackageIcon>
+	<PackageIconUrl />
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\..\..\..\Documents\Affinity\HotkeyUtility\HotkeyUtility-icon.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+  </ItemGroup>
 
 </Project>
