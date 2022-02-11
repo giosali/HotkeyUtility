@@ -8,9 +8,38 @@
 	A simple library for setting and managing global hotkeys for WPF	
 </p>
 
+<p align="center">
+    <a href="https://www.nuget.org/packages/HotkeyUtility">
+        <img src="https://img.shields.io/nuget/v/HotkeyUtility?logo=nuget" alt="NuGet Version">
+    </a>
+    <a href="https://github.com/giosali/HotkeyUtility/blob/main/HotkeyUtility/HotkeyUtility.csproj">
+        <img src="https://img.shields.io/badge/dynamic/xml?color=%23512bd4&label=target&logo=.net&query=%2F%2FTargetFramework[1]&url=https%3A%2F%2Fraw.githubusercontent.com%2Fgiosali%2FHotkeyUtility%2Fmain%2FHotkeyUtility%2FHotkeyUtility.csproj" alt="Target Framework">
+    </a>
+</p>
+
+## Table of Contents
+
+- [Installation](#installation)
+- [Usage](#usage)
+  * [XAML](#xaml)
+    + [The HotkeyBinding Control](#the-hotkeybinding-control)
+    + [Changing the Hotkey at Runtime](#changing-the-hotkey-at-runtime)
+  * [Codebehind](#codebehind)
+    + [The HotkeyUtility Class](#the-hotkeyutility-class)
+    + [Adding a Hotkey](#adding-a-hotkey)
+    + [Removing a Hotkey](#removing-a-hotkey)
+
+## Installation
+
+You can find the package on [NuGet](https://www.nuget.org/packages/HotkeyUtility) or install it through PackageManagement:
+
+```ps
+Install-Package HotkeyUtility -Version 1.0.0
+```
+
 ## Usage
 
-There are two ways of using **HotkeyUtility**: through XAML with an MVVM implementation or through the codebehind.
+There are two ways of using **HotkeyUtility**: through XAML with an MVVM implementation and through the codebehind.
 
 ### XAML
 
@@ -91,7 +120,7 @@ Binding = keyBinding;
 
 ### Codebehind
 
-### The HotkeyUtility Class
+#### The HotkeyUtility Class
 
 The `HotkeyUtility` class employs a singleton pattern which means if you declare a `Hotkey` in File1.cs, you will have access to that same `Hotkey` in File2.cs.
 
