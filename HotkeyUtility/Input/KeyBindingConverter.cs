@@ -7,9 +7,9 @@ namespace HotkeyUtility.Input
 {
     public class KeyBindingConverter : TypeConverter
     {
-        private const char MODIFIERS_DELIMITER = '+';
+        internal const char DisplaystringSeparator = ',';
 
-        internal const char DISPLAYSTRING_SEPARATOR = ',';
+        private const char ModifiersDelimiter = '+';
 
         private static readonly KeyConverter keyConverter = new();
 
@@ -54,11 +54,11 @@ namespace HotkeyUtility.Input
                 string displayString;
 
                 // break apart display string
-                int index = fullName.IndexOf(DISPLAYSTRING_SEPARATOR);
+                int index = fullName.IndexOf(DisplaystringSeparator);
                 if (index >= 0)
                 {
                     displayString = fullName[(index + 1)..].Trim();
-                    fullName = fullName.Substring(0, index).Trim();
+                    fullName = fullName[..index].Trim();
                 }
                 else
                 {
@@ -66,10 +66,11 @@ namespace HotkeyUtility.Input
                 }
 
                 // break apart key and modifiers
-                index = fullName.LastIndexOf(MODIFIERS_DELIMITER);
+                index = fullName.LastIndexOf(ModifiersDelimiter);
                 if (index >= 0)
-                {   // modifiers exists
-                    modifiersToken = fullName.Substring(0, index);
+                {
+                    // modifiers exists
+                    modifiersToken = fullName[..index];
                     keyToken = fullName[(index + 1)..];
                 }
                 else
@@ -115,14 +116,14 @@ namespace HotkeyUtility.Input
                             return string.Empty;
                         }
 
-                        string strBinding = "";
+                        string strBinding = string.Empty;
                         string strKey = (string)keyConverter.ConvertTo(context, culture, keyBinding.Key, destinationType);
                         if (strKey.Length > 0)
                         {
                             strBinding += modifierKeysConverter.ConvertTo(context, culture, keyBinding.Modifiers, destinationType) as string;
                             if (strBinding.Length > 0)
                             {
-                                strBinding += MODIFIERS_DELIMITER;
+                                strBinding += ModifiersDelimiter;
                             }
 
                             strBinding += strKey;

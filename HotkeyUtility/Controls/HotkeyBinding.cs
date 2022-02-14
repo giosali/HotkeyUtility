@@ -1,8 +1,8 @@
-﻿using HotkeyUtility.Input;
-using System;
+﻿using System;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Input;
+using HotkeyUtility.Input;
 
 namespace HotkeyUtility.Controls
 {
