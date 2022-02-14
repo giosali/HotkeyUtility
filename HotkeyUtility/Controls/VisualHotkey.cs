@@ -13,8 +13,8 @@ namespace HotkeyUtility.Controls
             handlerType: typeof(HotkeyEventHandler),
             ownerType: typeof(VisualHotkey));
 
-        public static readonly DependencyProperty GestureProperty = DependencyProperty.RegisterAttached(
-            name: "Gesture",
+        public static readonly DependencyProperty CombinationProperty = DependencyProperty.RegisterAttached(
+            name: "Combination",
             propertyType: typeof(KeyBinding),
             ownerType: typeof(VisualHotkey),
             new PropertyMetadata(defaultValue: null, propertyChangedCallback: GesturePropertyChanged));
@@ -41,10 +41,10 @@ namespace HotkeyUtility.Controls
         }
 
         [TypeConverter(typeof(KeyBindingConverter))]
-        public KeyBinding Gesture
+        public KeyBinding Combination
         {
-            get => (KeyBinding)GetValue(GestureProperty);
-            set => SetValue(GestureProperty, value);
+            get => (KeyBinding)GetValue(CombinationProperty);
+            set => SetValue(CombinationProperty, value);
         }
 
         [TypeConverter(typeof(CommandConverter))]
@@ -66,8 +66,8 @@ namespace HotkeyUtility.Controls
         public static void GesturePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             VisualHotkey visualHotkey = (VisualHotkey)d;
-            KeyBinding gesture = visualHotkey.Gesture;
-            Hotkey hotKey = new(gesture.Key, gesture.Modifiers, visualHotkey.OnPressed, visualHotkey.Id);
+            KeyBinding combination = visualHotkey.Combination;
+            Hotkey hotKey = new(combination.Key, combination.Modifiers, visualHotkey.OnPressed, visualHotkey.Id);
             visualHotkey.Id = hotKey.Id;
             HotkeyUtility utility = HotkeyUtility.GetHotkeyUtility();
             if (!utility.TryAddHotkey(hotKey))
