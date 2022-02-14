@@ -1,12 +1,12 @@
-﻿using HotkeyUtility.Input;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Windows.Input;
 using System.Windows.Interop;
+using HotkeyUtility.Input;
 
 namespace HotkeyUtility
 {
-    class HotkeyUtility
+    public class HotkeyUtility
     {
         private static readonly object _locker = new();
 
@@ -16,7 +16,7 @@ namespace HotkeyUtility
             {
                 HwndSourceParameters parameters = new("HotkeyUtility Window")
                 {
-                    WindowStyle = 0
+                    WindowStyle = 0,
                 };
 
                 HwndSource source = new(parameters);
