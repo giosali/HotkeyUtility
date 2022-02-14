@@ -39,7 +39,7 @@
 You can find the package on [NuGet](https://www.nuget.org/packages/HotkeyUtility) or install it through PackageManagement:
 
 ```ps
-Install-Package HotkeyUtility -Version 1.1.0
+Install-Package HotkeyUtility -Version 1.1.1
 ```
 
 ## Usage
@@ -122,6 +122,30 @@ Binding = keyBinding;
 ```
 📝 NOTE: Do not assign a value to the ICommand parameter of the KeyBinding constructor. When the user triggers the HotkeyBinding, the ICommand will be ignored.
 ```
+
+#### VisualHotkey
+
+There is a possibility that binding to the `Pressed` event of a `HotkeyBinding` control will not work with certain MVVM frameworks. If this issue arises, you can attempt to circumvent it by using the `VisualHotkey` control. In the following example, I'll be using the [Caliburn.Micro](github.com/Caliburn-Micro/Caliburn.Micro) framework.
+
+The `VisualHotkey` control isn't really a control; it has no *visual* properties attached to it. Therefore, you can place them anywhere since they will only affect the logical tree and not the visual tree:
+
+```xml
+<Window x:Name="window"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:hu="clr-namespace:HotkeyUtility.Controls;assembly=HotkeyUtility"
+        xmlns:cal="http://www.caliburnproject.org">
+    <Grid>
+        <hu:VisualHotkey Combination="{Binding Combination}"
+                         cal:Message.Attach="[Event Pressed] = [Action VisualHotkey_Pressed($this, $eventArgs)]"/>
+    </Grid>
+
+</Window>
+```
+
+As you can see from the example above, the attached properties are the same as those for the `HotkeyBinding` control.
 
 ### Codebehind
 
