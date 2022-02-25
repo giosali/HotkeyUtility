@@ -49,6 +49,11 @@ namespace HotkeyUtility
 
         public bool TryAddHotkey(Hotkey hotkey)
         {
+            if (hotkey is null)
+            {
+                throw new ArgumentNullException(nameof(hotkey));
+            }
+
             bool success;
             lock (_locker)
             {
@@ -63,6 +68,11 @@ namespace HotkeyUtility
 
         public bool TryRemoveHotkey(Hotkey hotkey)
         {
+            if (hotkey is null)
+            {
+                throw new ArgumentNullException(nameof(hotkey));
+            }
+
             bool success = Keys.Remove(hotkey.Id);
             if (success)
             {
@@ -77,6 +87,11 @@ namespace HotkeyUtility
 
         public void ReplaceHotkey(Hotkey hotkey)
         {
+            if (hotkey is null)
+            {
+                throw new ArgumentNullException(nameof(hotkey));
+            }
+
             ushort id = hotkey.Id;
             if (Keys.ContainsKey(id))
             {
