@@ -10,24 +10,27 @@ namespace HotkeyUtility.Tests
         public static void GetHotkeyUtility_ShouldReturnSameHotkeyUtilityInstance()
         {
             HotkeyUtility hotkeyUtility = HotkeyUtility.GetHotkeyUtility();
-            _ = hotkeyUtility.TryAddHotkey(new Hotkey(Key.Space, ModifierKeys.Alt, null));
+            Hotkey hotkey = new(Key.Space, ModifierKeys.Alt, null);
+            _ = hotkeyUtility.TryAddHotkey(hotkey);
 
             HotkeyUtility anotherHotkeyUtility = HotkeyUtility.GetHotkeyUtility();
             int count = 0;
-            foreach (Hotkey hotkey in anotherHotkeyUtility.GetHotkeys())
+            foreach (Hotkey h in anotherHotkeyUtility.GetHotkeys())
             {
                 count++;
             }
 
             Assert.True(hotkeyUtility == anotherHotkeyUtility);
             Assert.True(count == 1);
+
+            _ = hotkeyUtility.TryRemoveHotkey(hotkey);
         }
 
         [WpfFact]
         public static void TryAddHotkey_WhenGivenValidHotkey_ShouldReturnTrue()
         {
             HotkeyUtility hotkeyUtility = HotkeyUtility.GetHotkeyUtility();
-            Hotkey hotkey = new(Key.Space, ModifierKeys.Control, null);
+            Hotkey hotkey = new(Key.Space, ModifierKeys.Alt, null);
             bool success = hotkeyUtility.TryAddHotkey(hotkey);
             Assert.True(success);
 
@@ -42,6 +45,8 @@ namespace HotkeyUtility.Tests
             }
 
             Assert.True(foundHotkey);
+
+            _ = hotkeyUtility.TryRemoveHotkey(hotkey);
         }
 
         [WpfFact]
@@ -52,6 +57,8 @@ namespace HotkeyUtility.Tests
             _ = hotkeyUtility.TryAddHotkey(hotkey);
             bool success = hotkeyUtility.TryAddHotkey(hotkey);
             Assert.False(success);
+
+            _ = hotkeyUtility.TryRemoveHotkey(hotkey);
         }
         
         [WpfFact]
@@ -108,6 +115,8 @@ namespace HotkeyUtility.Tests
 
             Assert.Equal(1, count);
             Assert.True(hasSameId);
+
+            _ = hotkeyUtility.TryRemoveHotkey(hotkey);
         }
 
         [WpfFact]
@@ -121,14 +130,17 @@ namespace HotkeyUtility.Tests
         public static void GetHotkeys_ShouldReturnCorrectNumberOfHotkeys()
         {
             HotkeyUtility hotkeyUtility = HotkeyUtility.GetHotkeyUtility();
-            _ = hotkeyUtility.TryAddHotkey(new Hotkey(Key.Space, ModifierKeys.Alt, null));
+            Hotkey hotkey = new Hotkey(Key.Space, ModifierKeys.Alt, null);
+            _ = hotkeyUtility.TryAddHotkey(hotkey);
             int count = 0;
-            foreach (Hotkey hotkey in hotkeyUtility.GetHotkeys())
+            foreach (Hotkey h in hotkeyUtility.GetHotkeys())
             {
                 count++;
             }
 
             Assert.Equal(1, count);
+
+            _ = hotkeyUtility.TryRemoveHotkey(hotkey);
         }
     }
 }
