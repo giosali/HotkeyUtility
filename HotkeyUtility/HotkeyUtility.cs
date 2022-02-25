@@ -91,6 +91,11 @@ namespace HotkeyUtility
             }
         }
 
+        public Dictionary<ushort, Hotkey>.ValueCollection GetHotkeys()
+        {
+            return Keys.Values;
+        }
+
         private static void RegisterHotkey(Hotkey hotkey)
         {
             bool registerSuccess = NativeMethods.RegisterHotKey(Handle, hotkey.Id, (uint)hotkey.Modifiers, (uint)KeyInterop.VirtualKeyFromKey(hotkey.Key));
