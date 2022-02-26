@@ -1,36 +1,32 @@
+using NUnit.Framework;
 using System;
+using System.Threading;
 using System.Windows.Input;
-using Xunit;
 
 namespace HotkeyUtility.Tests
 {
-    public static class HotkeyUtilityTests
+    [TestFixture]
+    [Apartment(ApartmentState.STA)]
+    public class HotkeyUtilityTests
     {
-        [WpfFact]
-        public static void GetHotkeyUtility_ShouldReturnSameHotkeyUtilityInstance()
+        [SetUp]
+        public void Setup()
         {
-            HotkeyUtility hotkeyUtility = HotkeyUtility.GetHotkeyUtility();
-            Hotkey hotkey = new(Key.Space, ModifierKeys.Alt, null);
-            _ = hotkeyUtility.TryAddHotkey(hotkey);
-
-            HotkeyUtility anotherHotkeyUtility = HotkeyUtility.GetHotkeyUtility();
-            int count = 0;
-            foreach (Hotkey h in anotherHotkeyUtility.GetHotkeys())
-            {
-                count++;
-            }
-
-            Assert.True(hotkeyUtility == anotherHotkeyUtility);
-            Assert.True(count == 1);
-
-            _ = hotkeyUtility.TryRemoveHotkey(hotkey);
         }
 
-        [WpfFact]
-        public static void TryAddHotkey_WhenGivenValidHotkey_ShouldReturnTrue()
+        [Test]
+        public void GetHotkeyUtility_ShouldReturnSameHotkeyUtilityInstance()
         {
             HotkeyUtility hotkeyUtility = HotkeyUtility.GetHotkeyUtility();
-            Hotkey hotkey = new(Key.Space, ModifierKeys.Alt, null);
+            HotkeyUtility anotherHotkeyUtility = HotkeyUtility.GetHotkeyUtility();
+            Assert.True(hotkeyUtility == anotherHotkeyUtility);
+        }
+
+        [Test]
+        public void TryAddHotkey_WhenGivenValidHotkey_ShouldReturnTrue()
+        {
+            HotkeyUtility hotkeyUtility = HotkeyUtility.GetHotkeyUtility();
+            Hotkey hotkey = new(Key.Space, ModifierKeys.Control, null);
             bool success = hotkeyUtility.TryAddHotkey(hotkey);
             Assert.True(success);
 
@@ -45,92 +41,98 @@ namespace HotkeyUtility.Tests
             }
 
             Assert.True(foundHotkey);
-
-            _ = hotkeyUtility.TryRemoveHotkey(hotkey);
         }
 
-        [WpfFact]
-        public static void TryAddHotkey_WhenHotkeyIsAlreadyRegistered_ShouldReturnFalse()
+        [Test]
+        public void TryAddHotkey_WhenHotkeyIsAlreadyRegistered_ShouldReturnFalse()
         {
             HotkeyUtility hotkeyUtility = HotkeyUtility.GetHotkeyUtility();
-            Hotkey hotkey = new(Key.Space, ModifierKeys.Alt, null);
+            Hotkey hotkey = new(Key.Space, ModifierKeys.Shift, null);
             _ = hotkeyUtility.TryAddHotkey(hotkey);
             bool success = hotkeyUtility.TryAddHotkey(hotkey);
             Assert.False(success);
-
-            _ = hotkeyUtility.TryRemoveHotkey(hotkey);
         }
-        
-        [WpfFact]
-        public static void TryAddHotkey_WhenGivenNull_ShouldThrowArgumentNullException()
+
+        [Test]
+        public void TryAddHotkey_WhenGivenNull_ShouldThrowArgumentNullException()
         {
             HotkeyUtility hotkeyUtility = HotkeyUtility.GetHotkeyUtility();
             Assert.Throws<ArgumentNullException>(() => hotkeyUtility.TryAddHotkey(null));
         }
 
-        [WpfFact]
-        public static void TryRemoveHotkey_WhenGivenValidHotkey_ShouldReturnTrue()
+        [Test]
+        public void TryRemoveHotkey_WhenGivenValidHotkey_ShouldReturnTrue()
         {
             HotkeyUtility hotkeyUtility = HotkeyUtility.GetHotkeyUtility();
-            Hotkey hotkey = new(Key.Space, ModifierKeys.Alt, null);
+            int initialCount = 0;
+            foreach (Hotkey _ in hotkeyUtility.GetHotkeys())
+            {
+                initialCount++;
+            }
+
+            Hotkey hotkey = new(Key.A, ModifierKeys.Alt, null);
             _ = hotkeyUtility.TryAddHotkey(hotkey);
             bool success = hotkeyUtility.TryRemoveHotkey(hotkey);
             Assert.True(success);
 
-            int count = 0;
-            foreach (Hotkey h in hotkeyUtility.GetHotkeys())
+            int finalCount = 0;
+            foreach (Hotkey _ in hotkeyUtility.GetHotkeys())
             {
-                count++;
+                finalCount++;
             }
 
-            Assert.Equal(0, count);
+            Assert.AreEqual(initialCount, finalCount);
         }
 
-        [WpfFact]
-        public static void TryRemoveHotkey_WhenGivenNull_ShouldThrowArgumentNullException()
+        [Test]
+        public void TryRemoveHotkey_WhenGivenNull_ShouldThrowArgumentNullException()
         {
             HotkeyUtility hotkeyUtility = HotkeyUtility.GetHotkeyUtility();
             Assert.Throws<ArgumentNullException>(() => hotkeyUtility.TryRemoveHotkey(null));
         }
 
-        [WpfFact]
-        public static void ReplaceHotkey_WhenGivenValidHotkey_ShouldOnlyReplaceHotkeys()
+        [Test]
+        public void ReplaceHotkey_WhenGivenValidHotkey_ShouldOnlyReplaceHotkeys()
         {
             HotkeyUtility hotkeyUtility = HotkeyUtility.GetHotkeyUtility();
-            Hotkey hotkey = new(Key.Space, ModifierKeys.Alt, null);
+            int initialCount = 0;
+            foreach (Hotkey _ in hotkeyUtility.GetHotkeys())
+            {
+                initialCount++;
+            }
+
+            Hotkey hotkey = new(Key.A, ModifierKeys.Control, null);
             _ = hotkeyUtility.TryAddHotkey(hotkey);
             hotkey.Modifiers = ModifierKeys.Control;
             hotkeyUtility.ReplaceHotkey(hotkey);
 
-            int count = 0;
             bool hasSameId = false;
+            int finalCount = 0;
             foreach (Hotkey h in hotkeyUtility.GetHotkeys())
             {
-                count++;
-                if (h.Id == default(ushort) + 1)
+                finalCount++;
+                if (h.Id == hotkey.Id && !hasSameId)
                 {
                     hasSameId = true;
                 }
             }
 
-            Assert.Equal(1, count);
+            Assert.AreEqual(initialCount + 1, finalCount);
             Assert.True(hasSameId);
-
-            _ = hotkeyUtility.TryRemoveHotkey(hotkey);
         }
 
-        [WpfFact]
-        public static void ReplaceHotkey_WhenGivenNull_ShouldThrowArgumentNullException()
+        [Test]
+        public void ReplaceHotkey_WhenGivenNull_ShouldThrowArgumentNullException()
         {
             HotkeyUtility hotkeyUtility = HotkeyUtility.GetHotkeyUtility();
             Assert.Throws<ArgumentNullException>(() => hotkeyUtility.ReplaceHotkey(null));
         }
 
-        [WpfFact]
-        public static void GetHotkeys_ShouldReturnCorrectNumberOfHotkeys()
+        [Test]
+        public void GetHotkeys_ShouldReturnCorrectNumberOfHotkeys()
         {
             HotkeyUtility hotkeyUtility = HotkeyUtility.GetHotkeyUtility();
-            Hotkey hotkey = new Hotkey(Key.Space, ModifierKeys.Alt, null);
+            Hotkey hotkey = new(Key.A, ModifierKeys.Shift, null);
             _ = hotkeyUtility.TryAddHotkey(hotkey);
             int count = 0;
             foreach (Hotkey h in hotkeyUtility.GetHotkeys())
@@ -138,9 +140,7 @@ namespace HotkeyUtility.Tests
                 count++;
             }
 
-            Assert.Equal(1, count);
-
-            _ = hotkeyUtility.TryRemoveHotkey(hotkey);
+            Assert.AreEqual(1, count);
         }
     }
 }
