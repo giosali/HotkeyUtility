@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using System.Windows.Input;
 using System.Windows.Interop;
 using HotkeyUtility.Input;
@@ -78,7 +79,7 @@ namespace HotkeyUtility
             {
                 lock (_locker)
                 {
-                    UnregisterHotkey(Handle, hotkey.Id);
+                    return UnregisterHotkey(Handle, hotkey.Id);
                 }
             }
 
@@ -113,10 +114,10 @@ namespace HotkeyUtility
 
         private static void RegisterHotkey(Hotkey hotkey)
         {
-            bool registerSuccess = NativeMethods.RegisterHotKey(Handle, hotkey.Id, (uint)hotkey.Modifiers, (uint)KeyInterop.VirtualKeyFromKey(hotkey.Key));
-            if (!registerSuccess)
+            bool success = NativeMethods.RegisterHotKey(Handle, hotkey.Id, (uint)hotkey.Modifiers, (uint)KeyInterop.VirtualKeyFromKey(hotkey.Key));
+            if (!success)
             {
-                throw new ApplicationException($"Keystrokes specified for the hotkey (Key: {hotkey.Key} | Modifiers: {hotkey.Modifiers}) have already been registered by another hotkey");
+                throw new ApplicationException($"The keystrokes specified for the hotkey (Key: {hotkey.Key} | Modifiers: {hotkey.Modifiers}) have already been registered by another hotkey");
             }
         }
 
