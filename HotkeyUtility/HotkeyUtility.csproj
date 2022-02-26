@@ -11,7 +11,7 @@
 	<PackageTags>Hotkey, Register, Global, Keyboard, Shortcut</PackageTags>
 	<PackageIcon>HotkeyUtility-icon.png</PackageIcon>
 	<PackageIconUrl />
-	<Version>1.1.1</Version>
+	<Version>1.2.0</Version>
   </PropertyGroup>
 
   <ItemGroup>
