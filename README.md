@@ -17,6 +17,15 @@
     </a>
 </p>
 
+<p align="center">
+    <a href="https://github.com/giosali/HotkeyUtility/actions/workflows/ci.yml">
+        <img src="https://github.com/giosali/HotkeyUtility/actions/workflows/ci.yml/badge.svg" alt="CI Workflow">
+    </a>
+    <a href="https://github.com/giosali/HotkeyUtility/blob/main/LICENSE">
+        <img src="https://img.shields.io/github/license/giosali/HotkeyUtility" alt="License">
+    </a>
+</p>
+
 ## Table of Contents
 
 - [Requirements](#requirements)
