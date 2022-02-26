@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Runtime.InteropServices;
 using System.Windows.Input;
 using System.Windows.Interop;
 using HotkeyUtility.Input;
@@ -32,6 +31,10 @@ namespace HotkeyUtility
 
         private Dictionary<ushort, Hotkey> Keys { get; set; } = new();
 
+        /// <summary>
+        /// Returns a single, global instance of the HotkeyUtility.
+        /// </summary>
+        /// <returns>A single, global instance of the HotkeyUtility.</returns>
         public static HotkeyUtility GetHotkeyUtility()
         {
             if (Instance is null)
@@ -48,6 +51,12 @@ namespace HotkeyUtility
             return Instance;
         }
 
+        /// <summary>
+        /// Attempts to add the specified <see cref="Hotkey"/> to a dictionary, using its Id property as the key, and registers it.
+        /// </summary>
+        /// <param name="hotkey">The <see cref="Hotkey"/> to add.</param>
+        /// <returns><see langword="true"/> if <paramref name="hotkey"/> was added to the dictionary successfully; otherwise, <see langword="false"/>.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="hotkey"/> is <see langword="null"/>.</exception>
         public bool TryAddHotkey(Hotkey hotkey)
         {
             if (hotkey is null)
@@ -67,6 +76,12 @@ namespace HotkeyUtility
             return success;
         }
 
+        /// <summary>
+        /// Attempts to remove the specified <see cref="Hotkey"/> from a dictionary and unregisters it.
+        /// </summary>
+        /// <param name="hotkey">The <see cref="Hotkey"/> to remove.</param>
+        /// <returns><see langword="true"/> if <paramref name="hotkey"/> was remove from the dictionary successfully; otherwise, <see langword="false"/>.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="hotkey"/> is <see langword="null"/>.</exception>
         public bool TryRemoveHotkey(Hotkey hotkey)
         {
             if (hotkey is null)
@@ -86,6 +101,11 @@ namespace HotkeyUtility
             return success;
         }
 
+        /// <summary>
+        /// Unregisters the existing <paramref name="hotkey"/> and registers its new Key and Modifiers properties.
+        /// </summary>
+        /// <param name="hotkey">The <see cref="Hotkey"/> to replace.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="hotkey"/> is <see langword="null"/>.</exception>
         public void ReplaceHotkey(Hotkey hotkey)
         {
             if (hotkey is null)
@@ -107,6 +127,10 @@ namespace HotkeyUtility
             }
         }
 
+        /// <summary>
+        /// Returns a <see cref="Dictionary{TKey, TValue}.ValueCollection"/> of hotkeys.
+        /// </summary>
+        /// <returns>A <see cref="Dictionary{TKey, TValue}.ValueCollection"/> of <see cref="Hotkey"/></returns>
         public Dictionary<ushort, Hotkey>.ValueCollection GetHotkeys()
         {
             return Keys.Values;
