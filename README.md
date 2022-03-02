@@ -28,16 +28,19 @@
 
 ## Table of Contents
 
+- [Table of Contents](#table-of-contents)
 - [Requirements](#requirements)
 - [Installation](#installation)
 - [Usage](#usage)
   * [XAML](#xaml)
     + [The HotkeyBinding Control](#the-hotkeybinding-control)
     + [Changing the Hotkey at Runtime](#changing-the-hotkey-at-runtime)
+    + [VisualHotkey](#visualhotkey)
   * [Codebehind](#codebehind)
     + [The HotkeyUtility Class](#the-hotkeyutility-class)
     + [Adding a Hotkey](#adding-a-hotkey)
     + [Removing a Hotkey](#removing-a-hotkey)
+- [Documentation](#documentation)
 
 ## Requirements
 
@@ -198,3 +201,7 @@ public Hotkey Hotkey { get; set; }
 HotkeyUtility utility = HotkeyUtility.GetHotkeyUtility();
 bool success = utility.TryRemoveHotkey(Hotkey);
 ```
+
+## Documentation
+
+You can read and find out more in the [documentation](https://giosali.github.io/HotkeyUtility/).
