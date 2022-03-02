@@ -41,14 +41,14 @@
 
 ## Requirements
 
-`HotkeyUtility` is compatible with **.NET 5.0** (*net5.0-windows*) and **.NET 6.0** (*net6.0-windows*).
+**HotkeyUtility** is compatible with **.NET 5.0** (*net5.0-windows*) and **.NET 6.0** (*net6.0-windows*).
 
 ## Installation
 
 You can find the package on [NuGet](https://www.nuget.org/packages/HotkeyUtility) or install it through PackageManagement:
 
 ```ps
-Install-Package HotkeyUtility -Version 1.1.1
+Install-Package HotkeyUtility
 ```
 
 ## Usage
