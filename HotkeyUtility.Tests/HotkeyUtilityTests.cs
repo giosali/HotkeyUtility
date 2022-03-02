@@ -70,7 +70,7 @@ namespace HotkeyUtility.Tests
                 initialCount++;
             }
 
-            Hotkey hotkey = new(Key.A, ModifierKeys.Alt, null);
+            Hotkey hotkey = new(Key.Space, ModifierKeys.Alt, null);
             _ = hotkeyUtility.TryAddHotkey(hotkey);
             bool success = hotkeyUtility.TryRemoveHotkey(hotkey);
             Assert.True(success);
@@ -128,11 +128,31 @@ namespace HotkeyUtility.Tests
             Assert.Throws<ArgumentNullException>(() => hotkeyUtility.ReplaceHotkey(null));
         }
 
+        public void ReplaceHotkey_WhenGivenIdKeyAndModifierKeys_ShouldReplaceHotkey()
+        {
+            HotkeyUtility hotkeyUtility = HotkeyUtility.GetHotkeyUtility();
+            Hotkey hotkey = new(Key.A, ModifierKeys.Shift, null);
+            _ = hotkeyUtility.TryAddHotkey(hotkey);
+
+            Key key = Key.A;
+            ModifierKeys modifiers = ModifierKeys.Shift | ModifierKeys.Control;
+            hotkeyUtility.ReplaceHotkey(hotkey.Id, key, modifiers);
+            Assert.AreEqual(hotkey.Key, key);
+            Assert.AreEqual(hotkey.Modifiers, modifiers);
+        }
+
+        [Test]
+        public void ReplaceaHotkey_WhenGivenKeyNoneModifierKeysNone_ShouldThrowArgumentException()
+        {
+            HotkeyUtility hotkeyUtility = HotkeyUtility.GetHotkeyUtility();
+            Assert.Throws<ArgumentException>(() => hotkeyUtility.ReplaceHotkey(0, Key.None, ModifierKeys.None));
+        }
+
         [Test]
         public void GetHotkeys_ShouldReturnCorrectNumberOfHotkeys()
         {
             HotkeyUtility hotkeyUtility = HotkeyUtility.GetHotkeyUtility();
-            Hotkey hotkey = new(Key.A, ModifierKeys.Shift, null);
+            Hotkey hotkey = new(Key.A, ModifierKeys.Alt, null);
             _ = hotkeyUtility.TryAddHotkey(hotkey);
             int count = 0;
             foreach (Hotkey h in hotkeyUtility.GetHotkeys())
