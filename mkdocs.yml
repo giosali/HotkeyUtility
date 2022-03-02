@@ -1,0 +1,41 @@
+site_name: HotkeyUtility
+site_url: https://giosali.github.io/HotkeyUtility/
+site_author: Giovanni Salinas
+site_description:  A simple library for setting and managing global hotkeys for WPF.
+
+theme:
+  name: material
+  features:
+    - content.code.annotate
+  palette:
+    - scheme: slate
+      primary: deep orange
+      accent: deep orange
+      toggle:
+        icon: material/toggle-switch-off-outline
+        name: Switch to light mode
+    - scheme: default
+      primary: deep orange
+      accent: deep orange
+      toggle:
+        icon: material/toggle-switch
+        name: Switch to dark mode
+  logo: assets/logo.png
+
+repo_name: giosali/HotkeyUtility
+repo_url: https://github.com/giosali/HotkeyUtility
+edit_uri: ""
+
+nav:
+  - Home: index.md
+  - Quickstart: quickstart.md
+  - Advanced Usage: advanced_usage.md
+
+markdown_extensions:
+  - admonition
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.keys
+  - pymdownx.snippets
+  - pymdownx.superfences
