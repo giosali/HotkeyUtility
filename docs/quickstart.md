@@ -72,7 +72,7 @@ You can use it in your XML file like in this example (which uses [Caliburn.Micro
 
 ## You Can Still Use Commands
 
-If you're more comfortable using [ICommand](https://docs.microsoft.com/en-us/dotnet/api/system.windows.input.icommand) and you'd rather use a command than an event handler, that's also available as an option for both the `HotkeyBinding` and the `VisualHotkey`:
+If you're more comfortable using the [ICommand](https://docs.microsoft.com/en-us/dotnet/api/system.windows.input.icommand) interface and you'd rather use a command than an event handler, that's also available as an option for both the `HotkeyBinding` and the `VisualHotkey`:
 
 ```xml linenums="1" title="ShellView.xaml"
 <Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
