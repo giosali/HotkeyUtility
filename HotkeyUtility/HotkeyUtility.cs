@@ -128,6 +128,35 @@ namespace HotkeyUtility
         }
 
         /// <summary>
+        /// Unregisters an existing <see cref="Hotkey"/> by its <paramref name="id"/> and re-registers it with a new <paramref name="key"/> and <paramref name="modifiers"/>.
+        /// </summary>
+        /// <param name="id">The ID of the <see cref="Hotkey"/> to replace.</param>
+        /// <param name="key">The new <see cref="Key"/> of the <see cref="Hotkey"/>.</param>
+        /// <param name="modifiers">The new <see cref="ModifierKeys"/> of the <see cref="Hotkey"/>.</param>
+        /// <exception cref="ArgumentException"><paramref name="key"/> and <paramref name="modifiers"/> are <see langword="null"/>.</exception>
+        public void ReplaceHotkey(ushort id, Key key = Key.None, ModifierKeys modifiers = ModifierKeys.None)
+        {
+            if (key == Key.None && modifiers == ModifierKeys.None)
+            {
+                throw new ArgumentException($"{key} and {modifiers} cannot both be None");
+            }
+
+            if (Keys.ContainsKey(id))
+            {
+                lock (_locker)
+                {
+                    if (UnregisterHotkey(Handle, id))
+                    {
+                        Hotkey hotkey = Keys[id];
+                        hotkey.Key = key;
+                        hotkey.Modifiers = modifiers;
+                        RegisterHotkey(hotkey);
+                    }
+                }
+            }
+        }
+
+        /// <summary>
         /// Returns a <see cref="Dictionary{TKey, TValue}.ValueCollection"/> of hotkeys.
         /// </summary>
         /// <returns>A <see cref="Dictionary{TKey, TValue}.ValueCollection"/> of <see cref="Hotkey"/></returns>
