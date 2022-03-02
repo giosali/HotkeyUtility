@@ -69,3 +69,25 @@ You can use it in your XML file like in this example (which uses [Caliburn.Micro
 
 !!! info
     One possible reason why it might not work is because [InputBinding](https://docs.microsoft.com/en-us/dotnet/api/system.windows.input.keybinding) doesn't inherit from [FrameworkElement](https://docs.microsoft.com/en-us/dotnet/api/system.windows.frameworkelement).
+
+## You Can Still Use Commands
+
+If you're more comfortable using [ICommand](https://docs.microsoft.com/en-us/dotnet/api/system.windows.input.icommand) and you'd rather use a command than an event handler, that's also available as an option for both the `HotkeyBinding` and the `VisualHotkey`:
+
+```xml linenums="1" title="ShellView.xaml"
+<Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:hu="clr-namespace:HotkeyUtility.Controls;assembly=HotkeyUtility">
+    <Window.InputBindings>
+        <hu:HotkeyBinding Combination="Alt + Space"
+                          Command="{Binding MyCommand}"/>
+    </Window.InputBindings>
+
+    <Grid>
+        <hu:VisualHotkey Combination="Shift + M"
+                         Command="{Binding MyOtherCommand}"/>
+    </Grid>
+</Window>
+```
