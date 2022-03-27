@@ -1,7 +1,7 @@
 <h1 align="center">HotkeyUtility</h1>
 
 <p align="center">
-	<img src="https://raw.githubusercontent.com/giosali/HotkeyUtility/main/ext/HotkeyUtility-logo.png" width="150">
+	<img src="https://raw.githubusercontent.com/giosali/HotkeyUtility/main/ext/logo.png" width="150">
 </p>
 
 <p align="center">
@@ -128,7 +128,7 @@ KeyBinding keyBinding = new()
     Key = Key.Space
     Modifiers = ModifierKeys.Control
 };
-Binding = keyBinding;
+YourBinding = keyBinding;
 ```
 
 ```
@@ -161,17 +161,17 @@ As you can see from the example above, the attached properties are the same as t
 
 ### Codebehind
 
-#### The HotkeyUtility Class
+#### The HotkeyManager Class
 
-The `HotkeyUtility` class employs a singleton pattern which means if you declare a `Hotkey` in File1.cs, you will have access to that same `Hotkey` in File2.cs.
+The `HotkeyManager` class employs a singleton pattern which means if you declare a `Hotkey` in File1.cs, you will have access to that same `Hotkey` in File2.cs.
 
 #### Adding a Hotkey
 
 If you would like to register a global hotkey programmatically, you can do so by: 
 
-* Invoking the `GetHotkeyUtility` method in the `HotkeyUtility` class
+* Invoking the `GetHotkeyManager` method in the `HotkeyManager` class
 * Instantiating a `Hotkey` object
-* And by using the `TryAddHotkey` method of `HotkeyUtility`
+* And by using the `TryAddHotkey` method of the `HotkeyManager` class
 
 ```cs
 using HotkeyUtility;
@@ -183,14 +183,14 @@ public void AltSpace_Pressed(object sender, HotkeyEventArgs e)
     Console.WriteLine("AltSpace_Pressed called");
 }
 
-HotkeyUtility utility = HotkeyUtility.GetHotkeyUtility();
+HotkeyManager manager = HotkeyManager.GetHotkeyManager();
 Hotkey hotkey = new(Key.Space, ModifierKeys.Alt, AltSpace_Pressed);
-bool success = utility.TryAddHotkey(hotkey);
+bool success = manager.TryAddHotkey(hotkey);
 ```
 
 #### Removing a Hotkey
 
-In order to remove a hotkey, use the `TryRemoveHotkey` method on `HotkeyUtility`:
+In order to remove a hotkey, use the `TryRemoveHotkey` method on `HotkeyManager`:
 
 ```cs
 using HotkeyUtility;
@@ -198,8 +198,8 @@ using HotkeyUtility;
 // A Hotkey property
 public Hotkey Hotkey { get; set; }
 
-HotkeyUtility utility = HotkeyUtility.GetHotkeyUtility();
-bool success = utility.TryRemoveHotkey(Hotkey);
+HotkeyManager manager = HotkeyManager.GetHotkeyManager();
+bool success = manager.TryRemoveHotkey(Hotkey);
 ```
 
 ## Documentation
