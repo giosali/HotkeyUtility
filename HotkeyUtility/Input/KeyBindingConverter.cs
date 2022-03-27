@@ -5,9 +5,12 @@ using System.Windows.Input;
 
 namespace HotkeyUtility.Input
 {
+    /// <summary>
+    /// Converts a <see cref="KeyBinding"/> object to and from other types.
+    /// </summary>
     public class KeyBindingConverter : TypeConverter
     {
-        internal const char DisplaystringSeparator = ',';
+        private const char DisplaystringSeparator = ',';
 
         private const char ModifiersDelimiter = '+';
 
@@ -15,12 +18,14 @@ namespace HotkeyUtility.Input
 
         private static readonly ModifierKeysConverter modifierKeysConverter = new();
 
+        /// <inheritdoc/>
         public override bool CanConvertFrom(ITypeDescriptorContext context, Type sourceType)
         {
             // We can only handle string.
             return sourceType == typeof(string);
         }
 
+        /// <inheritdoc/>
         public override bool CanConvertTo(ITypeDescriptorContext context, Type destinationType)
         {
             // We can convert to an InstanceDescriptor or to a string.
@@ -36,6 +41,7 @@ namespace HotkeyUtility.Input
             return false;
         }
 
+        /// <inheritdoc/>
         public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object source)
         {
             if (source is string s)
@@ -98,6 +104,7 @@ namespace HotkeyUtility.Input
             throw GetConvertFromException(source);
         }
 
+        /// <inheritdoc/>
         public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value, Type destinationType)
         {
             if (destinationType == null)
@@ -141,7 +148,11 @@ namespace HotkeyUtility.Input
             throw GetConvertToException(value, destinationType);
         }
 
-        // Check for Valid enum, as any int can be casted to the enum.
+        /// <summary>
+        /// Checks for a valid enum, as any <see cref="int"/> can be casted to the enum.
+        /// </summary>
+        /// <param name="key">The <see cref="Key"/> to check.</param>
+        /// <returns><see langword="true"/> if the specified key falls between the values of <see cref="Key.None"/> and <see cref="Key.OemClear"/>; otherwise, <see langword="false"/>.</returns>
         internal static bool IsDefinedKey(Key key)
         {
             return key is >= Key.None and <= Key.OemClear;
