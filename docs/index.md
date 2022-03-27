@@ -1,6 +1,8 @@
 <h1 align="center">HotkeyUtility</h1>
 
-![HotkeyUtility Logo](assets/logo.png){ width="150" }
+<p align="center">
+    <img src="assets/logo.png" alt="HotkeyUtility Logo" width="150">
+</p>
 
 <p align="center">
 	A simple library for setting and managing global hotkeys for WPF	
