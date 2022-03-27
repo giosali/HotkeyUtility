@@ -15,40 +15,40 @@ Both `HotkeyBinding` and `VisualHotkey` contain a dependency property called `Co
 
 ## Using `HotkeyUtility` Programmatically
 
-So far, you've really only seen **HotkeyUtility** used in XAML but what if you're more of a codebehind kind of person? Well, don't worry because you can simply use the `HotkeyUtility` class to add, remove, or replace hotkeys.
+So far, you've really only seen **HotkeyUtility** used in XAML but what if you're more of a codebehind kind of person? Well, don't worry because you can simply use the `HotkeyManager` class to add, remove, or replace hotkeys.
 
-The [HotkeyUtility](https://github.com/giosali/HotkeyUtility/blob/main/HotkeyUtility/HotkeyUtility.cs) class exposes the following methods that you can use:
+The [HotkeyManager](https://github.com/giosali/HotkeyUtility/blob/main/HotkeyUtility/HotkeyManager.cs) class exposes the following methods that you can use:
 
-* `GetHotkeyUtility`
+* `GetHotkeyManager`
 * `TryAddHotkey`
 * `TryRemoveHotkey`
-* `ReplaceHotkey`
+* `TryReplaceHotkey`
 * `GetHotkeys`
 
 ### Getting Started
 
-In order to get an instance of the `HotkeyUtility` class, you need to use its `GetHotkeyUtility` method. The `HotkeyUtility` class uses the [singleton design pattern](https://en.wikipedia.org/wiki/Singleton_pattern) which means that as long as you access your `HotkeyUtility` from the *same thread* that created it in the first place, you'll always have access to your hotkeys.
+In order to get an instance of the `HotkeyManager` class, you need to use its `GetHotkeyManager` method. The `HotkeyManager` class uses the [singleton design pattern](https://en.wikipedia.org/wiki/Singleton_pattern) which means that as long as you access your `HotkeyManager` from the *same thread* that created it in the first place, you'll always have access to your hotkeys.
 
-Here's an example where we create an instance of `HotkeyUtility` for the first time in our application:
+Here's a simple example of how we can go about creating an instance of `HotkeyManager` for the first time in our application:
 
 ```csharp linenums="1" title="ShellViewModel.cs"
 using HotkeyUtility;
 
-public void InstantiateHotKeyUtility()
+public void InstantiateHotkeyManager()
 {
-    HotkeyUtility hotkeyUtility = HotkeyUtility.GetHotkeyUtility();
+    HotkeyManager hotkeyManager = HotkeyManager.GetHotkeyManager();
 }
 ```
 
-Now, let's say that we've added some hotkeys to our utility (which we'll get to later just shortly in another section) and we want to interact with them in another file. Well, we can do exactly that by calling the same method:
+Now, let's say that we've added some hotkeys to our `HotkeyManager` (which we'll get to soon in another section) and we want to interact with them in another file. Well, we can do exactly that by calling the same method:
 
 ```csharp linenums="1" title="OtherViewModel.cs"
 using HotkeyUtility;
 
-public void InstantiateHotKeyUtility()
+public void InstantiateHotkeyManager()
 {
     // This is the same instance as the one in the previous file
-    HotkeyUtility hotkeyUtility = HotkeyUtility.GetHotkeyUtility();
+    HotkeyManager hotkeyManager = HotkeyManager.GetHotkeyManager();
 }
 ```
 
@@ -57,9 +57,9 @@ public void InstantiateHotKeyUtility()
 If you want to programmatically add a hotkey to your application, you'll need to:
 
 1. Create a `Hotkey` object
-2. Use the `TryAddHotkey` method to add it
+2. Use the `TryAddHotkey` method on `HotkeyManager` to add it
 
-`Hotkey` objects have the following constructor signature:
+The `Hotkey` class has the following signature for its constructor:
 
 ```csharp linenums="1"
 public Hotkey(Key key, ModifierKeys modifiers, EventHandler<HotkeyEventArgs> handler, ushort id = default)
@@ -67,7 +67,7 @@ public Hotkey(Key key, ModifierKeys modifiers, EventHandler<HotkeyEventArgs> han
 
 You'll need to pass it a [Key](https://docs.microsoft.com/en-us/dotnet/api/system.windows.input.key), a [ModifierKeys](https://docs.microsoft.com/en-us/dotnet/api/system.windows.input.modifierkeys), and an event handler that will be subscribed to the `Pressed` event that will trigger when the hotkey is pressed.
 
-Once you've created your `Hotkey`, pass it to the `TryAddHotkey` method of an instance of the `HotkeyUtility` class:
+Once you've created your `Hotkey`, pass it to the `TryAddHotkey` method of an instance of the `HotkeyManager` class:
 
 ```csharp linenums="1"
 using System;
@@ -80,8 +80,8 @@ public static void Main()
     ModifierKeys modifiers = ModifierKeys.Shift | ModifierKeys.Control;
     
     Hotkey hotkey = new(key, modifiers, Hotkey_Pressed);
-    HotkeyUtility hotkeyUtility = HotkeyUtility.GetHotkeyUtility();
-    _ = hotkeyUtility.TryAddHotkey(hotkey);
+    HotkeyManager hotkeyManager = HotkeyManager.GetHotkeyManager();
+    _ = hotkeyManager.TryAddHotkey(hotkey);
 }
 
 public static void Hotkey_Pressed(object sender, HotkeyEventArgs e)
@@ -94,7 +94,7 @@ The `TryAddHotkey` method returns a bool indicating whether or not the operation
 
 ### Removing Hotkeys
 
-If you want to remove a hotkey from your application, you can do so by passing the same `Hotkey` object to the `TryRemoveHotkey` method of `HotkeyUtility`:
+If you want to remove a hotkey from your application, you can do so by passing the same `Hotkey` object to the `TryRemoveHotkey` method of `HotkeyManager`:
 
 ```csharp linenums="1"
 using System;
@@ -107,10 +107,10 @@ public static void Main()
     ModifierKeys modifiers = ModifierKeys.Shift | ModifierKeys.Control;
     
     Hotkey hotkey = new(key, modifiers, Hotkey_Pressed);
-    HotkeyUtility hotkeyUtility = HotkeyUtility.GetHotkeyUtility();
-    _ = hotkeyUtility.TryAddHotkey(hotkey);
+    HotkeyManager hotkeyManager = HotkeyManager.GetHotkeyManager();
+    _ = hotkeyManager.TryAddHotkey(hotkey);
 
-    _ = hotkeyUtility.TryRemoveHotkey(hotkey);
+    _ = hotkeyManager.TryRemoveHotkey(hotkey);
 }
 
 public static void Hotkey_Pressed(object sender, HotkeyEventArgs e)
@@ -125,7 +125,19 @@ The `TryRemoveHotkey` method returns a bool indicating whether or not the operat
 
 ### Replacing Hotkeys
 
-The `ReplaceHotkey` method works by replacing the [Key](https://docs.microsoft.com/en-us/dotnet/api/system.windows.input.key) and [ModifierKeys](https://docs.microsoft.com/en-us/dotnet/api/system.windows.input.modifierkeys) for an existing `Hotkey` by passing its `Id` property:
+The `TryReplaceHotkey` method works by unregistering an existing `Hotkey` and reregistering it with a new [Key](https://docs.microsoft.com/en-us/dotnet/api/system.windows.input.key), a new [ModifierKeys](https://docs.microsoft.com/en-us/dotnet/api/system.windows.input.modifierkeys), or both and returns a boolean indicating whether the operation was successful. This method consists of two overloaded methods. Here are both of their signatures:
+
+```csharp linenums="1" title="First signature"
+public bool TryReplaceHotkey(Key oldKey, ModifierKeys oldModifiers, Key newKey = Key.None, ModifierKeys newModifiers = ModifierKeys.None)
+```
+
+```csharp linenums="1" title="Second signature"
+public bool TryReplaceHotkey(ushort id, Key newKey = Key.None, ModifierKeys newModifiers = ModifierKeys.None)
+```
+
+#### First Overloaded Method
+
+For the first signature, all you need are the [Key](https://docs.microsoft.com/en-us/dotnet/api/system.windows.input.key) and [ModifierKeys](https://docs.microsoft.com/en-us/dotnet/api/system.windows.input.modifierkeys) of an existing `Hotkey` object for the first two parameters. These will be used to iterate through the current hotkeys until it finds a matching Key and ModifierKeys. The `newKey` and `newModifiers` parameters will then be used to replace the binding of the existing `Hotkey`.
 
 ```csharp linenums="1"
 using System;
@@ -134,14 +146,41 @@ using HotkeyUtility;
 
 public static void Main()
 {
-    HotkeyUtility hotkeyUtility = HotkeyUtility.GetHotkeyUtility();
+    HotkeyManager hotkeyManager = HotkeyManager.GetHotkeyManager();
     Hotkey hotkey = new(Key.A, ModifierKeys.Shift | ModifierKeys.Control, Hotkey_Pressed);
-    _ = hotkeyUtility.TryAddHotkey(hotkey);
+    _ = hotkeyManager.TryAddHotkey(hotkey);
 
     // Now, pressing Shift + Control + A is no longer registered and Hotkey_Pressed
     // will no longer be triggered by that hotkey.
-    // Instead, if the user presses Alt + B, Hotkey_Pressed will be triggered.
-    hotkeyUtility.ReplaceHotkey(hotkey.Id, Key.B, ModifierKeys.Alt);
+    // Instead, Hotkey_Pressed will now be triggered by pressing Alt + B.
+    _ = hotkeyManager.TryReplaceHotkey(Key.A, ModifierKeys.Shift | ModifierKeys.Control, Key.B, ModifierKeys.Alt);
+}
+
+public static void Hotkey_Pressed(object sender, HotkeyEventArgs e)
+{
+    Console.WriteLine();
+}
+```
+
+#### Second Overloaded Method
+
+As for the second signature, the first parameter must be filled by the `Id` of an existing `Hotkey`. If the `Id` is a match, the `newKey` and `newModifiers` parameters will be used to replace the binding of the existing `Hotkey`.
+
+```csharp linenums="1"
+using System;
+using System.Windows.Input;
+using HotkeyUtility;
+
+public static void Main()
+{
+    HotkeyManager hotkeyManager = HotkeyManager.GetHotkeyManager();
+    Hotkey hotkey = new(Key.A, ModifierKeys.Shift | ModifierKeys.Control, Hotkey_Pressed);
+    _ = hotkeyManager.TryAddHotkey(hotkey);
+
+    // Now, pressing Shift + Control + A is no longer registered and Hotkey_Pressed
+    // will no longer be triggered by that hotkey.
+    // Instead, Hotkey_Pressed will now be triggered by pressing Alt + B.
+    hotkeyManager.TryReplaceHotkey(hotkey.Id, Key.B, ModifierKeys.Alt);
 }
 
 public static void Hotkey_Pressed(object sender, HotkeyEventArgs e)
@@ -160,8 +199,8 @@ using HotkeyUtility;
 
 public static void Main()
 {
-    HotkeyUtility hotkeyUtility = HotkeyUtility.GetHotkeyUtility();
-    foreach (Hotkey hotkey in hotkeyUtility.GetHotkeys())
+    HotkeyManager hotkeyManager = HotkeyManager.GetHotkeyManager();
+    foreach (Hotkey hotkey in hotkeyManager.GetHotkeys())
     {
         // Do something here
     }
