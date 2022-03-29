@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Windows.Input;
 using System.Windows.Interop;
+using HotkeyUtility.Extensions;
 using HotkeyUtility.Input;
 
 namespace HotkeyUtility
@@ -24,11 +25,11 @@ namespace HotkeyUtility
         {
             if (Handle == IntPtr.Zero)
             {
+                // Creates an invisible Win32 window that we can use to handle WM_HOTKEY messages.
                 HwndSourceParameters parameters = new("HotkeyUtility")
                 {
                     WindowStyle = 0,
                 };
-
                 HwndSource source = new(parameters);
                 source.AddHook(WndProc);
                 Handle = source.Handle;
@@ -110,7 +111,7 @@ namespace HotkeyUtility
         /// <param name="newKey">The key to replace the current key.</param>
         /// <param name="newModifiers">The modifiers to replace the current modifiers.</param>
         /// <returns><see langword="true"/> if the specified <see cref="Key"/> and specified <see cref="ModifierKeys"/> were successfully matched and replaced; otherwise, <see langword="false"/>.</returns>
-        /// <exception cref="ArgumentException"><paramref name="newKey"/> and <paramref name="newModifiers"/> are respectively <see cref="Key.None"/> and <see cref="ModifierKeys.None"/>.</exception>
+        /// <exception cref="ArgumentException"><paramref name="newKey"/> and <paramref name="newModifiers"/> are respectively equal to <see cref="Key.None"/> and <see cref="ModifierKeys.None"/>.</exception>
         public bool TryReplaceHotkey(Key oldKey, ModifierKeys oldModifiers, Key newKey = Key.None, ModifierKeys newModifiers = ModifierKeys.None)
         {
             if (newKey == Key.None && newModifiers == ModifierKeys.None)
@@ -144,7 +145,7 @@ namespace HotkeyUtility
         /// <param name="newKey">The key to replace the current key.</param>
         /// <param name="newModifiers">The modifiers to replace the current modifiers.</param>
         /// <returns><see langword="true"/> if the specified id was matched and the new key and modifiers were successfully registered; otherwise, <see langword="false"/>.</returns>
-        /// <exception cref="ArgumentException"><paramref name="id"/> is equal to <see langword="default"/> or <paramref name="newKey"/> and <paramref name="newModifiers"/> are respectively <see cref="Key.None"/> and <see cref="ModifierKeys.None"/>.</exception>
+        /// <exception cref="ArgumentException"><paramref name="id"/> is equal to <see langword="default"/> or <paramref name="newKey"/> and <paramref name="newModifiers"/> are respectively equal to <see cref="Key.None"/> and <see cref="ModifierKeys.None"/>.</exception>
         public bool TryReplaceHotkey(ushort id, Key newKey = Key.None, ModifierKeys newModifiers = ModifierKeys.None)
         {
             if (id == default)
@@ -157,19 +158,58 @@ namespace HotkeyUtility
                 throw new ArgumentException($"{newKey} and {newModifiers} cannot both be None");
             }
 
-            bool success;
-            if (success = Keys.ContainsKey(id))
+            // Checks in order:
+            // 1. That the id of the hotkey exists to begin with.
+            // 2. That we aren't trying to needlessly register the same exact hotkey combination.
+            // 3. And that we are able to successfully unregister the previous hotkey.
+            //
+            //
+            //
+            // I think it's important to expand on what I mean in point 2. Let's say a user has two
+            // VisualHotkey controls in their XAML. One VisualHotkey's Combination property is using
+            // a MultiBinding with a converter and binding to two strings: the first string is called
+            // 'Key' and the second string is called 'Modifiers'. The converter ultimately converts
+            // both strings to a KeyBinding by parsing Key.Space from 'Key' and parsing ModifierKeys.Alt
+            // from 'Modifiers'. The user's second VisualHotkey's Combination property is simply hard-coded
+            // as "Control + Space".
+            //
+            // Since one of the main features of HotkeyUtility is that users can change hotkey bindings
+            // at runtime, there's a high chance the user will want to change one or both of those strings.
+            // Let's now say the user changes 'Key' to the string equivalent of Key.D and 'Modifiers' to
+            // the string equivalent of 'Control'. No exception is thrown but behind the scenes, the way the
+            // Combination property updates due to the MultiBinding is that:
+            //
+            //      - The Combination is first binded to a KeyBinding of Key.D + ModifierKeys.Alt
+            //          -- The previous binding (Key.Space + ModifierKeys.Alt) gets unregistered
+            //          -- Key.D + ModifierKeys.Alt becomes the new hotkey binding
+            //      - The Combination finally changes to a KeyBinding of Key.D + ModifierKeys.Control
+            //          -- The previous binding (Key.D + ModifierKeys.Alt) gets unregistered
+            //          -- Key.D + ModifierKeys.Control becomes the new hotkey binding
+            //
+            // See the problem? There's a completely unneccesary registering and unregistering when *both*
+            // 'Key' and 'Modifiers' change. The user only wanted "Control + D", not "Alt + D". Even
+            // though no exceptions are thrown here, this presents a much greater problem when the user
+            // switches 'Key' and 'Modififers' back to Key.Space and ModifierKeys.Alt. Let's see how it
+            // plays out:
+            //
+            //      - The Combination is first binded to a KeyBinding of Key.Space + ModifierKeys.Control
+            //          -- The previous binding (Key.D + ModifierKeys.Control) gets unregistered
+            //          -- Key.Space + ModifierKeys.Control becomes the new hotkey binding... except it
+            //             doesn't because an exception gets thrown
+            //
+            // Remember what the user's second VisualHotkey's Combination was? It was "Control + Space"
+            // which means that the hotkey is already registered. So, when we try to register Key.Space +
+            // ModifierKeys.Control, it fails because the RegisterHotKey function produces an
+            // ERROR_HOTKEY_ALREADY_REGISTERED error and an ApplicationException gets subsequently thrown.
+            if (Keys.ContainsKey(id) && GetHotkeys().Find(newKey, newModifiers) is null && UnregisterHotkey(Handle, id))
             {
-                if (success = UnregisterHotkey(Handle, id))
-                {
-                    Hotkey hotkey = Keys[id];
-                    hotkey.Key = newKey;
-                    hotkey.Modifiers = newModifiers;
-                    success = RegisterHotkey(hotkey);
-                }
+                Hotkey oldhotkey = Keys[id];
+                oldhotkey.Key = newKey;
+                oldhotkey.Modifiers = newModifiers;
+                return RegisterHotkey(oldhotkey);
             }
 
-            return success;
+            return false;
         }
 
         /// <summary>
