@@ -207,3 +207,16 @@ public static void Main()
 }
 ```
 
+Additionally, **HotkeyUtility** provides an extension method called `Find` that you can use alongside the `GetHotkeys` method to quickly and compactly find a single `Hotkey` in the [ValueCollection](https://docs.microsoft.com/en-us/dotnet/api/system.collections.generic.dictionary-2.valuecollection). Pass the method a [Key](https://docs.microsoft.com/en-us/dotnet/api/system.windows.input.key) and [ModifierKeys](https://docs.microsoft.com/en-us/dotnet/api/system.windows.input.modifierkeys) to find and match the existing `Hotkey`. If a match was found, the expected `Hotkey` will be returned; otherwise, `null` will be returned.
+
+```csharp linenums="1"
+using System;
+using HotkeyUtility;
+using HotkeyUtility.Extensions;
+
+public static void Main()
+{
+    HotkeyManager hotkeyManager = HotkeyManager.GetHotkeyManager();
+    Hotkey hotkey = hotkeyManager.GetHotkeys().Find(Key.Space, ModifierKeys.Control);
+}
+```
