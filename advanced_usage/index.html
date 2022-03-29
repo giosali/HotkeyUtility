@@ -1,0 +1,865 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="A simple library for setting and managing global hotkeys for WPF.">
+      
+      
+        <meta name="author" content="Giovanni Salinas">
+      
+      
+        <link rel="canonical" href="https://giosali.github.io/HotkeyUtility/advanced_usage/">
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.3.0, mkdocs-material-8.2.8">
+    
+    
+      
+        <title>Advanced Usage - HotkeyUtility</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.644de097.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.e6a45f82.min.css">
+        
+      
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="deep-orange" data-md-color-accent="deep-orange">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#advanced-usage" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="HotkeyUtility" class="md-header__button md-logo" aria-label="HotkeyUtility" data-md-component="logo">
+      
+  <img src="../assets/logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            HotkeyUtility
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Advanced Usage
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      <form class="md-header__option" data-md-component="palette">
+        
+          
+          
+          <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="deep-orange" data-md-color-accent="deep-orange"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+          
+            <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_2" hidden>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 6H7c-3.31 0-6 2.69-6 6s2.69 6 6 6h10c3.31 0 6-2.69 6-6s-2.69-6-6-6zm0 10H7c-2.21 0-4-1.79-4-4s1.79-4 4-4h10c2.21 0 4 1.79 4 4s-1.79 4-4 4zM7 9c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
+            </label>
+          
+        
+          
+          
+          <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="deep-orange" data-md-color-accent="deep-orange"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_2">
+          
+            <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 7H7a5 5 0 0 0-5 5 5 5 0 0 0 5 5h10a5 5 0 0 0 5-5 5 5 0 0 0-5-5m0 8a3 3 0 0 1-3-3 3 3 0 0 1 3-3 3 3 0 0 1 3 3 3 3 0 0 1-3 3z"/></svg>
+            </label>
+          
+        
+      </form>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/giosali/HotkeyUtility" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    giosali/HotkeyUtility
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="HotkeyUtility" class="md-nav__button md-logo" aria-label="HotkeyUtility" data-md-component="logo">
+      
+  <img src="../assets/logo.png" alt="logo">
+
+    </a>
+    HotkeyUtility
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/giosali/HotkeyUtility" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    giosali/HotkeyUtility
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        Home
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../quickstart/" class="md-nav__link">
+        Quickstart
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Advanced Usage
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Advanced Usage
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#binding" class="md-nav__link">
+    Binding
+  </a>
+  
+    <nav class="md-nav" aria-label="Binding">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-combination-property" class="md-nav__link">
+    The Combination Property
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#using-hotkeyutility-programmatically" class="md-nav__link">
+    Using HotkeyUtility Programmatically
+  </a>
+  
+    <nav class="md-nav" aria-label="Using HotkeyUtility Programmatically">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#getting-started" class="md-nav__link">
+    Getting Started
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#adding-hotkeys" class="md-nav__link">
+    Adding Hotkeys
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#removing-hotkeys" class="md-nav__link">
+    Removing Hotkeys
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#replacing-hotkeys" class="md-nav__link">
+    Replacing Hotkeys
+  </a>
+  
+    <nav class="md-nav" aria-label="Replacing Hotkeys">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#first-overloaded-method" class="md-nav__link">
+    First Overloaded Method
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#second-overloaded-method" class="md-nav__link">
+    Second Overloaded Method
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#viewing-your-hotkeys" class="md-nav__link">
+    Viewing Your Hotkeys
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#binding" class="md-nav__link">
+    Binding
+  </a>
+  
+    <nav class="md-nav" aria-label="Binding">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-combination-property" class="md-nav__link">
+    The Combination Property
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#using-hotkeyutility-programmatically" class="md-nav__link">
+    Using HotkeyUtility Programmatically
+  </a>
+  
+    <nav class="md-nav" aria-label="Using HotkeyUtility Programmatically">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#getting-started" class="md-nav__link">
+    Getting Started
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#adding-hotkeys" class="md-nav__link">
+    Adding Hotkeys
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#removing-hotkeys" class="md-nav__link">
+    Removing Hotkeys
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#replacing-hotkeys" class="md-nav__link">
+    Replacing Hotkeys
+  </a>
+  
+    <nav class="md-nav" aria-label="Replacing Hotkeys">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#first-overloaded-method" class="md-nav__link">
+    First Overloaded Method
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#second-overloaded-method" class="md-nav__link">
+    Second Overloaded Method
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#viewing-your-hotkeys" class="md-nav__link">
+    Viewing Your Hotkeys
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+
+
+<h1 id="advanced-usage">Advanced Usage</h1>
+<p>This page goes more in depth on some of the features and inner workings of the <strong>HotkeyUtility</strong> package.</p>
+<h2 id="binding">Binding</h2>
+<p>One of the more convenient features of <strong>HotkeyUtility</strong> is that its objects and controls support binding to its properties.</p>
+<h3 id="the-combination-property">The <code>Combination</code> Property</h3>
+<p>Both <code>HotkeyBinding</code> and <code>VisualHotkey</code> contain a dependency property called <code>Combination</code>, which is a <a href="https://docs.microsoft.com/en-us/dotnet/api/system.windows.input.keybinding">KeyBinding</a>. This means that if you bind a <a href="https://docs.microsoft.com/en-us/dotnet/api/system.windows.input.keybinding">KeyBinding</a> to the <code>Combination</code> property, the hotkey(s) in your application can be changed at runtime.</p>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>The <code>Combination</code> property is really just a <a href="https://docs.microsoft.com/en-us/dotnet/api/system.windows.input.keybinding">KeyBinding</a> in disguise. This provides a significant advantage over the <a href="https://docs.microsoft.com/en-us/dotnet/api/system.windows.input.keybinding.gesture#system-windows-input-keybinding-gesture">Gesture</a> property of a <a href="https://docs.microsoft.com/en-us/dotnet/api/system.windows.input.keybinding">KeyBinding</a> because the Gesture property doesn't allow certain combinations like <span class="keys"><kbd class="key-shift">Shift</kbd><span>+</span><kbd class="key-m">M</kbd></span> or <span class="keys"><kbd class="key-shift">Shift</kbd><span>+</span><kbd class="key-1">1</kbd></span>.</p>
+</div>
+<h2 id="using-hotkeyutility-programmatically">Using <code>HotkeyUtility</code> Programmatically</h2>
+<p>So far, you've really only seen <strong>HotkeyUtility</strong> used in XAML but what if you're more of a codebehind kind of person? Well, don't worry because you can simply use the <code>HotkeyManager</code> class to add, remove, or replace hotkeys.</p>
+<p>The <a href="https://github.com/giosali/HotkeyUtility/blob/main/HotkeyUtility/HotkeyManager.cs">HotkeyManager</a> class exposes the following methods that you can use:</p>
+<ul>
+<li><code>GetHotkeyManager</code></li>
+<li><code>TryAddHotkey</code></li>
+<li><code>TryRemoveHotkey</code></li>
+<li><code>TryReplaceHotkey</code></li>
+<li><code>GetHotkeys</code></li>
+</ul>
+<h3 id="getting-started">Getting Started</h3>
+<p>In order to get an instance of the <code>HotkeyManager</code> class, you need to use its <code>GetHotkeyManager</code> method. The <code>HotkeyManager</code> class uses the <a href="https://en.wikipedia.org/wiki/Singleton_pattern">singleton design pattern</a> which means that as long as you access your <code>HotkeyManager</code> from the <em>same thread</em> that created it in the first place, you'll always have access to your hotkeys.</p>
+<p>Here's a simple example of how we can go about creating an instance of <code>HotkeyManager</code> for the first time in our application:</p>
+<table class="highlighttable"><tr><th colspan="2" class="filename"><div class="highlight"><span class="filename">ShellViewModel.cs</span></div></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1">1</a></span>
+<span class="normal"><a href="#__codelineno-0-2">2</a></span>
+<span class="normal"><a href="#__codelineno-0-3">3</a></span>
+<span class="normal"><a href="#__codelineno-0-4">4</a></span>
+<span class="normal"><a href="#__codelineno-0-5">5</a></span>
+<span class="normal"><a href="#__codelineno-0-6">6</a></span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="k">using</span><span class="w"> </span><span class="nn">HotkeyUtility</span><span class="p">;</span><span class="w"></span>
+<a id="__codelineno-0-2" name="__codelineno-0-2"></a>
+<a id="__codelineno-0-3" name="__codelineno-0-3"></a><span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">InstantiateHotkeyManager</span><span class="p">()</span><span class="w"></span>
+<a id="__codelineno-0-4" name="__codelineno-0-4"></a><span class="p">{</span><span class="w"></span>
+<a id="__codelineno-0-5" name="__codelineno-0-5"></a><span class="w">    </span><span class="n">HotkeyManager</span><span class="w"> </span><span class="n">hotkeyManager</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">HotkeyManager</span><span class="p">.</span><span class="n">GetHotkeyManager</span><span class="p">();</span><span class="w"></span>
+<a id="__codelineno-0-6" name="__codelineno-0-6"></a><span class="p">}</span><span class="w"></span>
+</code></pre></div>
+</td></tr></table>
+<p>Now, let's say that we've added some hotkeys to our <code>HotkeyManager</code> (which we'll get to soon in another section) and we want to interact with them in another file. Well, we can do exactly that by calling the same method:</p>
+<table class="highlighttable"><tr><th colspan="2" class="filename"><div class="highlight"><span class="filename">OtherViewModel.cs</span></div></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1">1</a></span>
+<span class="normal"><a href="#__codelineno-1-2">2</a></span>
+<span class="normal"><a href="#__codelineno-1-3">3</a></span>
+<span class="normal"><a href="#__codelineno-1-4">4</a></span>
+<span class="normal"><a href="#__codelineno-1-5">5</a></span>
+<span class="normal"><a href="#__codelineno-1-6">6</a></span>
+<span class="normal"><a href="#__codelineno-1-7">7</a></span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a><span class="k">using</span><span class="w"> </span><span class="nn">HotkeyUtility</span><span class="p">;</span><span class="w"></span>
+<a id="__codelineno-1-2" name="__codelineno-1-2"></a>
+<a id="__codelineno-1-3" name="__codelineno-1-3"></a><span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">InstantiateHotkeyManager</span><span class="p">()</span><span class="w"></span>
+<a id="__codelineno-1-4" name="__codelineno-1-4"></a><span class="p">{</span><span class="w"></span>
+<a id="__codelineno-1-5" name="__codelineno-1-5"></a><span class="w">    </span><span class="c1">// This is the same instance as the one in the previous file</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6"></a><span class="w">    </span><span class="n">HotkeyManager</span><span class="w"> </span><span class="n">hotkeyManager</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">HotkeyManager</span><span class="p">.</span><span class="n">GetHotkeyManager</span><span class="p">();</span><span class="w"></span>
+<a id="__codelineno-1-7" name="__codelineno-1-7"></a><span class="p">}</span><span class="w"></span>
+</code></pre></div>
+</td></tr></table>
+<h3 id="adding-hotkeys">Adding Hotkeys</h3>
+<p>If you want to programmatically add a hotkey to your application, you'll need to:</p>
+<ol>
+<li>Create a <code>Hotkey</code> object</li>
+<li>Use the <code>TryAddHotkey</code> method on <code>HotkeyManager</code> to add it</li>
+</ol>
+<p>The <code>Hotkey</code> class has the following signature for its constructor:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1">1</a></span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a><span class="k">public</span><span class="w"> </span><span class="nf">Hotkey</span><span class="p">(</span><span class="n">Key</span><span class="w"> </span><span class="n">key</span><span class="p">,</span><span class="w"> </span><span class="n">ModifierKeys</span><span class="w"> </span><span class="n">modifiers</span><span class="p">,</span><span class="w"> </span><span class="n">EventHandler</span><span class="p">&lt;</span><span class="n">HotkeyEventArgs</span><span class="p">&gt;</span><span class="w"> </span><span class="n">handler</span><span class="p">,</span><span class="w"> </span><span class="kt">ushort</span><span class="w"> </span><span class="n">id</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="k">default</span><span class="p">)</span><span class="w"></span>
+</code></pre></div>
+</td></tr></table>
+<p>You'll need to pass it a <a href="https://docs.microsoft.com/en-us/dotnet/api/system.windows.input.key">Key</a>, a <a href="https://docs.microsoft.com/en-us/dotnet/api/system.windows.input.modifierkeys">ModifierKeys</a>, and an event handler that will be subscribed to the <code>Pressed</code> event that will trigger when the hotkey is pressed.</p>
+<p>Once you've created your <code>Hotkey</code>, pass it to the <code>TryAddHotkey</code> method of an instance of the <code>HotkeyManager</code> class:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-3-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-3-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-3-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-3-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-3-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-3-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-3-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-3-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-3-10">10</a></span>
+<span class="normal"><a href="#__codelineno-3-11">11</a></span>
+<span class="normal"><a href="#__codelineno-3-12">12</a></span>
+<span class="normal"><a href="#__codelineno-3-13">13</a></span>
+<span class="normal"><a href="#__codelineno-3-14">14</a></span>
+<span class="normal"><a href="#__codelineno-3-15">15</a></span>
+<span class="normal"><a href="#__codelineno-3-16">16</a></span>
+<span class="normal"><a href="#__codelineno-3-17">17</a></span>
+<span class="normal"><a href="#__codelineno-3-18">18</a></span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1"></a><span class="k">using</span><span class="w"> </span><span class="nn">System</span><span class="p">;</span><span class="w"></span>
+<a id="__codelineno-3-2" name="__codelineno-3-2"></a><span class="k">using</span><span class="w"> </span><span class="nn">System.Windows.Input</span><span class="p">;</span><span class="w"></span>
+<a id="__codelineno-3-3" name="__codelineno-3-3"></a><span class="k">using</span><span class="w"> </span><span class="nn">HotkeyUtility</span><span class="p">;</span><span class="w"></span>
+<a id="__codelineno-3-4" name="__codelineno-3-4"></a>
+<a id="__codelineno-3-5" name="__codelineno-3-5"></a><span class="k">public</span><span class="w"> </span><span class="k">static</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">Main</span><span class="p">()</span><span class="w"></span>
+<a id="__codelineno-3-6" name="__codelineno-3-6"></a><span class="p">{</span><span class="w"></span>
+<a id="__codelineno-3-7" name="__codelineno-3-7"></a><span class="w">    </span><span class="n">Key</span><span class="w"> </span><span class="n">key</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">Key</span><span class="p">.</span><span class="n">A</span><span class="p">;</span><span class="w"></span>
+<a id="__codelineno-3-8" name="__codelineno-3-8"></a><span class="w">    </span><span class="n">ModifierKeys</span><span class="w"> </span><span class="n">modifiers</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">ModifierKeys</span><span class="p">.</span><span class="n">Shift</span><span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="n">ModifierKeys</span><span class="p">.</span><span class="n">Control</span><span class="p">;</span><span class="w"></span>
+<a id="__codelineno-3-9" name="__codelineno-3-9"></a>
+<a id="__codelineno-3-10" name="__codelineno-3-10"></a><span class="w">    </span><span class="n">Hotkey</span><span class="w"> </span><span class="n">hotkey</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="k">new</span><span class="p">(</span><span class="n">key</span><span class="p">,</span><span class="w"> </span><span class="n">modifiers</span><span class="p">,</span><span class="w"> </span><span class="n">Hotkey_Pressed</span><span class="p">);</span><span class="w"></span>
+<a id="__codelineno-3-11" name="__codelineno-3-11"></a><span class="w">    </span><span class="n">HotkeyManager</span><span class="w"> </span><span class="n">hotkeyManager</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">HotkeyManager</span><span class="p">.</span><span class="n">GetHotkeyManager</span><span class="p">();</span><span class="w"></span>
+<a id="__codelineno-3-12" name="__codelineno-3-12"></a><span class="w">    </span><span class="n">_</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">hotkeyManager</span><span class="p">.</span><span class="n">TryAddHotkey</span><span class="p">(</span><span class="n">hotkey</span><span class="p">);</span><span class="w"></span>
+<a id="__codelineno-3-13" name="__codelineno-3-13"></a><span class="p">}</span><span class="w"></span>
+<a id="__codelineno-3-14" name="__codelineno-3-14"></a>
+<a id="__codelineno-3-15" name="__codelineno-3-15"></a><span class="k">public</span><span class="w"> </span><span class="k">static</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">Hotkey_Pressed</span><span class="p">(</span><span class="kt">object</span><span class="w"> </span><span class="n">sender</span><span class="p">,</span><span class="w"> </span><span class="n">HotkeyEventArgs</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"></span>
+<a id="__codelineno-3-16" name="__codelineno-3-16"></a><span class="p">{</span><span class="w"></span>
+<a id="__codelineno-3-17" name="__codelineno-3-17"></a><span class="w">    </span><span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">();</span><span class="w"></span>
+<a id="__codelineno-3-18" name="__codelineno-3-18"></a><span class="p">}</span><span class="w"></span>
+</code></pre></div>
+</td></tr></table>
+<p>The <code>TryAddHotkey</code> method returns a bool indicating whether or not the operation was successful.</p>
+<h3 id="removing-hotkeys">Removing Hotkeys</h3>
+<p>If you want to remove a hotkey from your application, you can do so by passing the same <code>Hotkey</code> object to the <code>TryRemoveHotkey</code> method of <code>HotkeyManager</code>:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-4-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-4-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-4-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-4-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-4-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-4-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-4-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-4-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-4-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-4-10">10</a></span>
+<span class="normal"><a href="#__codelineno-4-11">11</a></span>
+<span class="normal"><a href="#__codelineno-4-12">12</a></span>
+<span class="normal"><a href="#__codelineno-4-13">13</a></span>
+<span class="normal"><a href="#__codelineno-4-14">14</a></span>
+<span class="normal"><a href="#__codelineno-4-15">15</a></span>
+<span class="normal"><a href="#__codelineno-4-16">16</a></span>
+<span class="normal"><a href="#__codelineno-4-17">17</a></span>
+<span class="normal"><a href="#__codelineno-4-18">18</a></span>
+<span class="normal"><a href="#__codelineno-4-19">19</a></span>
+<span class="normal"><a href="#__codelineno-4-20">20</a></span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1"></a><span class="k">using</span><span class="w"> </span><span class="nn">System</span><span class="p">;</span><span class="w"></span>
+<a id="__codelineno-4-2" name="__codelineno-4-2"></a><span class="k">using</span><span class="w"> </span><span class="nn">System.Windows.Input</span><span class="p">;</span><span class="w"></span>
+<a id="__codelineno-4-3" name="__codelineno-4-3"></a><span class="k">using</span><span class="w"> </span><span class="nn">HotkeyUtility</span><span class="p">;</span><span class="w"></span>
+<a id="__codelineno-4-4" name="__codelineno-4-4"></a>
+<a id="__codelineno-4-5" name="__codelineno-4-5"></a><span class="k">public</span><span class="w"> </span><span class="k">static</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">Main</span><span class="p">()</span><span class="w"></span>
+<a id="__codelineno-4-6" name="__codelineno-4-6"></a><span class="p">{</span><span class="w"></span>
+<a id="__codelineno-4-7" name="__codelineno-4-7"></a><span class="w">    </span><span class="n">Key</span><span class="w"> </span><span class="n">key</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">Key</span><span class="p">.</span><span class="n">A</span><span class="p">;</span><span class="w"></span>
+<a id="__codelineno-4-8" name="__codelineno-4-8"></a><span class="w">    </span><span class="n">ModifierKeys</span><span class="w"> </span><span class="n">modifiers</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">ModifierKeys</span><span class="p">.</span><span class="n">Shift</span><span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="n">ModifierKeys</span><span class="p">.</span><span class="n">Control</span><span class="p">;</span><span class="w"></span>
+<a id="__codelineno-4-9" name="__codelineno-4-9"></a>
+<a id="__codelineno-4-10" name="__codelineno-4-10"></a><span class="w">    </span><span class="n">Hotkey</span><span class="w"> </span><span class="n">hotkey</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="k">new</span><span class="p">(</span><span class="n">key</span><span class="p">,</span><span class="w"> </span><span class="n">modifiers</span><span class="p">,</span><span class="w"> </span><span class="n">Hotkey_Pressed</span><span class="p">);</span><span class="w"></span>
+<a id="__codelineno-4-11" name="__codelineno-4-11"></a><span class="w">    </span><span class="n">HotkeyManager</span><span class="w"> </span><span class="n">hotkeyManager</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">HotkeyManager</span><span class="p">.</span><span class="n">GetHotkeyManager</span><span class="p">();</span><span class="w"></span>
+<a id="__codelineno-4-12" name="__codelineno-4-12"></a><span class="w">    </span><span class="n">_</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">hotkeyManager</span><span class="p">.</span><span class="n">TryAddHotkey</span><span class="p">(</span><span class="n">hotkey</span><span class="p">);</span><span class="w"></span>
+<a id="__codelineno-4-13" name="__codelineno-4-13"></a>
+<a id="__codelineno-4-14" name="__codelineno-4-14"></a><span class="w">    </span><span class="n">_</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">hotkeyManager</span><span class="p">.</span><span class="n">TryRemoveHotkey</span><span class="p">(</span><span class="n">hotkey</span><span class="p">);</span><span class="w"></span>
+<a id="__codelineno-4-15" name="__codelineno-4-15"></a><span class="p">}</span><span class="w"></span>
+<a id="__codelineno-4-16" name="__codelineno-4-16"></a>
+<a id="__codelineno-4-17" name="__codelineno-4-17"></a><span class="k">public</span><span class="w"> </span><span class="k">static</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">Hotkey_Pressed</span><span class="p">(</span><span class="kt">object</span><span class="w"> </span><span class="n">sender</span><span class="p">,</span><span class="w"> </span><span class="n">HotkeyEventArgs</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"></span>
+<a id="__codelineno-4-18" name="__codelineno-4-18"></a><span class="p">{</span><span class="w"></span>
+<a id="__codelineno-4-19" name="__codelineno-4-19"></a><span class="w">    </span><span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">();</span><span class="w"></span>
+<a id="__codelineno-4-20" name="__codelineno-4-20"></a><span class="p">}</span><span class="w"></span>
+</code></pre></div>
+</td></tr></table>
+<p>Now, <span class="keys"><kbd class="key-control">Ctrl</kbd><span>+</span><kbd class="key-shift">Shift</kbd><span>+</span><kbd class="key-a">A</kbd></span> will be unregistered from your application.</p>
+<p>The <code>TryRemoveHotkey</code> method returns a bool indicating whether or not the operation was successful.</p>
+<h3 id="replacing-hotkeys">Replacing Hotkeys</h3>
+<p>The <code>TryReplaceHotkey</code> method works by unregistering an existing <code>Hotkey</code> and reregistering it with a new <a href="https://docs.microsoft.com/en-us/dotnet/api/system.windows.input.key">Key</a>, a new <a href="https://docs.microsoft.com/en-us/dotnet/api/system.windows.input.modifierkeys">ModifierKeys</a>, or both and returns a boolean indicating whether the operation was successful. This method consists of two overloaded methods. Here are both of their signatures:</p>
+<table class="highlighttable"><tr><th colspan="2" class="filename"><div class="highlight"><span class="filename">First signature</span></div></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-5-1">1</a></span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1"></a><span class="k">public</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="nf">TryReplaceHotkey</span><span class="p">(</span><span class="n">Key</span><span class="w"> </span><span class="n">oldKey</span><span class="p">,</span><span class="w"> </span><span class="n">ModifierKeys</span><span class="w"> </span><span class="n">oldModifiers</span><span class="p">,</span><span class="w"> </span><span class="n">Key</span><span class="w"> </span><span class="n">newKey</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">Key</span><span class="p">.</span><span class="n">None</span><span class="p">,</span><span class="w"> </span><span class="n">ModifierKeys</span><span class="w"> </span><span class="n">newModifiers</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">ModifierKeys</span><span class="p">.</span><span class="n">None</span><span class="p">)</span><span class="w"></span>
+</code></pre></div>
+</td></tr></table>
+<table class="highlighttable"><tr><th colspan="2" class="filename"><div class="highlight"><span class="filename">Second signature</span></div></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-6-1">1</a></span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1"></a><span class="k">public</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="nf">TryReplaceHotkey</span><span class="p">(</span><span class="kt">ushort</span><span class="w"> </span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">Key</span><span class="w"> </span><span class="n">newKey</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">Key</span><span class="p">.</span><span class="n">None</span><span class="p">,</span><span class="w"> </span><span class="n">ModifierKeys</span><span class="w"> </span><span class="n">newModifiers</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">ModifierKeys</span><span class="p">.</span><span class="n">None</span><span class="p">)</span><span class="w"></span>
+</code></pre></div>
+</td></tr></table>
+<h4 id="first-overloaded-method">First Overloaded Method</h4>
+<p>For the first signature, all you need are the <a href="https://docs.microsoft.com/en-us/dotnet/api/system.windows.input.key">Key</a> and <a href="https://docs.microsoft.com/en-us/dotnet/api/system.windows.input.modifierkeys">ModifierKeys</a> of an existing <code>Hotkey</code> object for the first two parameters. These will be used to iterate through the current hotkeys until it finds a matching Key and ModifierKeys. The <code>newKey</code> and <code>newModifiers</code> parameters will then be used to replace the binding of the existing <code>Hotkey</code>.</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-7-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-7-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-7-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-7-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-7-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-7-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-7-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-7-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-7-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-7-10">10</a></span>
+<span class="normal"><a href="#__codelineno-7-11">11</a></span>
+<span class="normal"><a href="#__codelineno-7-12">12</a></span>
+<span class="normal"><a href="#__codelineno-7-13">13</a></span>
+<span class="normal"><a href="#__codelineno-7-14">14</a></span>
+<span class="normal"><a href="#__codelineno-7-15">15</a></span>
+<span class="normal"><a href="#__codelineno-7-16">16</a></span>
+<span class="normal"><a href="#__codelineno-7-17">17</a></span>
+<span class="normal"><a href="#__codelineno-7-18">18</a></span>
+<span class="normal"><a href="#__codelineno-7-19">19</a></span>
+<span class="normal"><a href="#__codelineno-7-20">20</a></span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1"></a><span class="k">using</span><span class="w"> </span><span class="nn">System</span><span class="p">;</span><span class="w"></span>
+<a id="__codelineno-7-2" name="__codelineno-7-2"></a><span class="k">using</span><span class="w"> </span><span class="nn">System.Windows.Input</span><span class="p">;</span><span class="w"></span>
+<a id="__codelineno-7-3" name="__codelineno-7-3"></a><span class="k">using</span><span class="w"> </span><span class="nn">HotkeyUtility</span><span class="p">;</span><span class="w"></span>
+<a id="__codelineno-7-4" name="__codelineno-7-4"></a>
+<a id="__codelineno-7-5" name="__codelineno-7-5"></a><span class="k">public</span><span class="w"> </span><span class="k">static</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">Main</span><span class="p">()</span><span class="w"></span>
+<a id="__codelineno-7-6" name="__codelineno-7-6"></a><span class="p">{</span><span class="w"></span>
+<a id="__codelineno-7-7" name="__codelineno-7-7"></a><span class="w">    </span><span class="n">HotkeyManager</span><span class="w"> </span><span class="n">hotkeyManager</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">HotkeyManager</span><span class="p">.</span><span class="n">GetHotkeyManager</span><span class="p">();</span><span class="w"></span>
+<a id="__codelineno-7-8" name="__codelineno-7-8"></a><span class="w">    </span><span class="n">Hotkey</span><span class="w"> </span><span class="n">hotkey</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="k">new</span><span class="p">(</span><span class="n">Key</span><span class="p">.</span><span class="n">A</span><span class="p">,</span><span class="w"> </span><span class="n">ModifierKeys</span><span class="p">.</span><span class="n">Shift</span><span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="n">ModifierKeys</span><span class="p">.</span><span class="n">Control</span><span class="p">,</span><span class="w"> </span><span class="n">Hotkey_Pressed</span><span class="p">);</span><span class="w"></span>
+<a id="__codelineno-7-9" name="__codelineno-7-9"></a><span class="w">    </span><span class="n">_</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">hotkeyManager</span><span class="p">.</span><span class="n">TryAddHotkey</span><span class="p">(</span><span class="n">hotkey</span><span class="p">);</span><span class="w"></span>
+<a id="__codelineno-7-10" name="__codelineno-7-10"></a>
+<a id="__codelineno-7-11" name="__codelineno-7-11"></a><span class="w">    </span><span class="c1">// Now, pressing Shift + Control + A is no longer registered and Hotkey_Pressed</span>
+<a id="__codelineno-7-12" name="__codelineno-7-12"></a><span class="w">    </span><span class="c1">// will no longer be triggered by that hotkey.</span>
+<a id="__codelineno-7-13" name="__codelineno-7-13"></a><span class="w">    </span><span class="c1">// Instead, Hotkey_Pressed will now be triggered by pressing Alt + B.</span>
+<a id="__codelineno-7-14" name="__codelineno-7-14"></a><span class="w">    </span><span class="n">_</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">hotkeyManager</span><span class="p">.</span><span class="n">TryReplaceHotkey</span><span class="p">(</span><span class="n">Key</span><span class="p">.</span><span class="n">A</span><span class="p">,</span><span class="w"> </span><span class="n">ModifierKeys</span><span class="p">.</span><span class="n">Shift</span><span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="n">ModifierKeys</span><span class="p">.</span><span class="n">Control</span><span class="p">,</span><span class="w"> </span><span class="n">Key</span><span class="p">.</span><span class="n">B</span><span class="p">,</span><span class="w"> </span><span class="n">ModifierKeys</span><span class="p">.</span><span class="n">Alt</span><span class="p">);</span><span class="w"></span>
+<a id="__codelineno-7-15" name="__codelineno-7-15"></a><span class="p">}</span><span class="w"></span>
+<a id="__codelineno-7-16" name="__codelineno-7-16"></a>
+<a id="__codelineno-7-17" name="__codelineno-7-17"></a><span class="k">public</span><span class="w"> </span><span class="k">static</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">Hotkey_Pressed</span><span class="p">(</span><span class="kt">object</span><span class="w"> </span><span class="n">sender</span><span class="p">,</span><span class="w"> </span><span class="n">HotkeyEventArgs</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"></span>
+<a id="__codelineno-7-18" name="__codelineno-7-18"></a><span class="p">{</span><span class="w"></span>
+<a id="__codelineno-7-19" name="__codelineno-7-19"></a><span class="w">    </span><span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">();</span><span class="w"></span>
+<a id="__codelineno-7-20" name="__codelineno-7-20"></a><span class="p">}</span><span class="w"></span>
+</code></pre></div>
+</td></tr></table>
+<h4 id="second-overloaded-method">Second Overloaded Method</h4>
+<p>As for the second signature, the first parameter must be filled by the <code>Id</code> of an existing <code>Hotkey</code>. If the <code>Id</code> is a match, the <code>newKey</code> and <code>newModifiers</code> parameters will be used to replace the binding of the existing <code>Hotkey</code>.</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-8-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-8-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-8-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-8-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-8-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-8-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-8-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-8-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-8-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-8-10">10</a></span>
+<span class="normal"><a href="#__codelineno-8-11">11</a></span>
+<span class="normal"><a href="#__codelineno-8-12">12</a></span>
+<span class="normal"><a href="#__codelineno-8-13">13</a></span>
+<span class="normal"><a href="#__codelineno-8-14">14</a></span>
+<span class="normal"><a href="#__codelineno-8-15">15</a></span>
+<span class="normal"><a href="#__codelineno-8-16">16</a></span>
+<span class="normal"><a href="#__codelineno-8-17">17</a></span>
+<span class="normal"><a href="#__codelineno-8-18">18</a></span>
+<span class="normal"><a href="#__codelineno-8-19">19</a></span>
+<span class="normal"><a href="#__codelineno-8-20">20</a></span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1"></a><span class="k">using</span><span class="w"> </span><span class="nn">System</span><span class="p">;</span><span class="w"></span>
+<a id="__codelineno-8-2" name="__codelineno-8-2"></a><span class="k">using</span><span class="w"> </span><span class="nn">System.Windows.Input</span><span class="p">;</span><span class="w"></span>
+<a id="__codelineno-8-3" name="__codelineno-8-3"></a><span class="k">using</span><span class="w"> </span><span class="nn">HotkeyUtility</span><span class="p">;</span><span class="w"></span>
+<a id="__codelineno-8-4" name="__codelineno-8-4"></a>
+<a id="__codelineno-8-5" name="__codelineno-8-5"></a><span class="k">public</span><span class="w"> </span><span class="k">static</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">Main</span><span class="p">()</span><span class="w"></span>
+<a id="__codelineno-8-6" name="__codelineno-8-6"></a><span class="p">{</span><span class="w"></span>
+<a id="__codelineno-8-7" name="__codelineno-8-7"></a><span class="w">    </span><span class="n">HotkeyManager</span><span class="w"> </span><span class="n">hotkeyManager</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">HotkeyManager</span><span class="p">.</span><span class="n">GetHotkeyManager</span><span class="p">();</span><span class="w"></span>
+<a id="__codelineno-8-8" name="__codelineno-8-8"></a><span class="w">    </span><span class="n">Hotkey</span><span class="w"> </span><span class="n">hotkey</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="k">new</span><span class="p">(</span><span class="n">Key</span><span class="p">.</span><span class="n">A</span><span class="p">,</span><span class="w"> </span><span class="n">ModifierKeys</span><span class="p">.</span><span class="n">Shift</span><span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="n">ModifierKeys</span><span class="p">.</span><span class="n">Control</span><span class="p">,</span><span class="w"> </span><span class="n">Hotkey_Pressed</span><span class="p">);</span><span class="w"></span>
+<a id="__codelineno-8-9" name="__codelineno-8-9"></a><span class="w">    </span><span class="n">_</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">hotkeyManager</span><span class="p">.</span><span class="n">TryAddHotkey</span><span class="p">(</span><span class="n">hotkey</span><span class="p">);</span><span class="w"></span>
+<a id="__codelineno-8-10" name="__codelineno-8-10"></a>
+<a id="__codelineno-8-11" name="__codelineno-8-11"></a><span class="w">    </span><span class="c1">// Now, pressing Shift + Control + A is no longer registered and Hotkey_Pressed</span>
+<a id="__codelineno-8-12" name="__codelineno-8-12"></a><span class="w">    </span><span class="c1">// will no longer be triggered by that hotkey.</span>
+<a id="__codelineno-8-13" name="__codelineno-8-13"></a><span class="w">    </span><span class="c1">// Instead, Hotkey_Pressed will now be triggered by pressing Alt + B.</span>
+<a id="__codelineno-8-14" name="__codelineno-8-14"></a><span class="w">    </span><span class="n">hotkeyManager</span><span class="p">.</span><span class="n">TryReplaceHotkey</span><span class="p">(</span><span class="n">hotkey</span><span class="p">.</span><span class="n">Id</span><span class="p">,</span><span class="w"> </span><span class="n">Key</span><span class="p">.</span><span class="n">B</span><span class="p">,</span><span class="w"> </span><span class="n">ModifierKeys</span><span class="p">.</span><span class="n">Alt</span><span class="p">);</span><span class="w"></span>
+<a id="__codelineno-8-15" name="__codelineno-8-15"></a><span class="p">}</span><span class="w"></span>
+<a id="__codelineno-8-16" name="__codelineno-8-16"></a>
+<a id="__codelineno-8-17" name="__codelineno-8-17"></a><span class="k">public</span><span class="w"> </span><span class="k">static</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">Hotkey_Pressed</span><span class="p">(</span><span class="kt">object</span><span class="w"> </span><span class="n">sender</span><span class="p">,</span><span class="w"> </span><span class="n">HotkeyEventArgs</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"></span>
+<a id="__codelineno-8-18" name="__codelineno-8-18"></a><span class="p">{</span><span class="w"></span>
+<a id="__codelineno-8-19" name="__codelineno-8-19"></a><span class="w">    </span><span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">();</span><span class="w"></span>
+<a id="__codelineno-8-20" name="__codelineno-8-20"></a><span class="p">}</span><span class="w"></span>
+</code></pre></div>
+</td></tr></table>
+<h3 id="viewing-your-hotkeys">Viewing Your Hotkeys</h3>
+<p>You can iterate over all of your current hotkeys by calling the <code>GetHotkeys</code> method. This will return a <a href="https://docs.microsoft.com/en-us/dotnet/api/system.collections.generic.dictionary-2.valuecollection">ValueCollection</a> of <code>Hotkey</code> objects that you can then iterate over:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-9-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-9-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-9-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-9-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-9-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-9-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-9-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-9-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-9-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-9-10">10</a></span>
+<span class="normal"><a href="#__codelineno-9-11">11</a></span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1"></a><span class="k">using</span><span class="w"> </span><span class="nn">System</span><span class="p">;</span><span class="w"></span>
+<a id="__codelineno-9-2" name="__codelineno-9-2"></a><span class="k">using</span><span class="w"> </span><span class="nn">HotkeyUtility</span><span class="p">;</span><span class="w"></span>
+<a id="__codelineno-9-3" name="__codelineno-9-3"></a>
+<a id="__codelineno-9-4" name="__codelineno-9-4"></a><span class="k">public</span><span class="w"> </span><span class="k">static</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">Main</span><span class="p">()</span><span class="w"></span>
+<a id="__codelineno-9-5" name="__codelineno-9-5"></a><span class="p">{</span><span class="w"></span>
+<a id="__codelineno-9-6" name="__codelineno-9-6"></a><span class="w">    </span><span class="n">HotkeyManager</span><span class="w"> </span><span class="n">hotkeyManager</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">HotkeyManager</span><span class="p">.</span><span class="n">GetHotkeyManager</span><span class="p">();</span><span class="w"></span>
+<a id="__codelineno-9-7" name="__codelineno-9-7"></a><span class="w">    </span><span class="k">foreach</span><span class="w"> </span><span class="p">(</span><span class="n">Hotkey</span><span class="w"> </span><span class="n">hotkey</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">hotkeyManager</span><span class="p">.</span><span class="n">GetHotkeys</span><span class="p">())</span><span class="w"></span>
+<a id="__codelineno-9-8" name="__codelineno-9-8"></a><span class="w">    </span><span class="p">{</span><span class="w"></span>
+<a id="__codelineno-9-9" name="__codelineno-9-9"></a><span class="w">        </span><span class="c1">// Do something here</span>
+<a id="__codelineno-9-10" name="__codelineno-9-10"></a><span class="w">    </span><span class="p">}</span><span class="w"></span>
+<a id="__codelineno-9-11" name="__codelineno-9-11"></a><span class="p">}</span><span class="w"></span>
+</code></pre></div>
+</td></tr></table>
+<p>Additionally, <strong>HotkeyUtility</strong> provides an extension method called <code>Find</code> that you can use alongside the <code>GetHotkeys</code> method to quickly and compactly find a single <code>Hotkey</code> in the <a href="https://docs.microsoft.com/en-us/dotnet/api/system.collections.generic.dictionary-2.valuecollection">ValueCollection</a>. Pass the method a <a href="https://docs.microsoft.com/en-us/dotnet/api/system.windows.input.key">Key</a> and <a href="https://docs.microsoft.com/en-us/dotnet/api/system.windows.input.modifierkeys">ModifierKeys</a> to find and match the existing <code>Hotkey</code>. If a match was found, the expected <code>Hotkey</code> will be returned; otherwise, <code>null</code> will be returned.</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-10-1">1</a></span>
+<span class="normal"><a href="#__codelineno-10-2">2</a></span>
+<span class="normal"><a href="#__codelineno-10-3">3</a></span>
+<span class="normal"><a href="#__codelineno-10-4">4</a></span>
+<span class="normal"><a href="#__codelineno-10-5">5</a></span>
+<span class="normal"><a href="#__codelineno-10-6">6</a></span>
+<span class="normal"><a href="#__codelineno-10-7">7</a></span>
+<span class="normal"><a href="#__codelineno-10-8">8</a></span>
+<span class="normal"><a href="#__codelineno-10-9">9</a></span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1"></a><span class="k">using</span><span class="w"> </span><span class="nn">System</span><span class="p">;</span><span class="w"></span>
+<a id="__codelineno-10-2" name="__codelineno-10-2"></a><span class="k">using</span><span class="w"> </span><span class="nn">HotkeyUtility</span><span class="p">;</span><span class="w"></span>
+<a id="__codelineno-10-3" name="__codelineno-10-3"></a><span class="k">using</span><span class="w"> </span><span class="nn">HotkeyUtility.Extensions</span><span class="p">;</span><span class="w"></span>
+<a id="__codelineno-10-4" name="__codelineno-10-4"></a>
+<a id="__codelineno-10-5" name="__codelineno-10-5"></a><span class="k">public</span><span class="w"> </span><span class="k">static</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">Main</span><span class="p">()</span><span class="w"></span>
+<a id="__codelineno-10-6" name="__codelineno-10-6"></a><span class="p">{</span><span class="w"></span>
+<a id="__codelineno-10-7" name="__codelineno-10-7"></a><span class="w">    </span><span class="n">HotkeyManager</span><span class="w"> </span><span class="n">hotkeyManager</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">HotkeyManager</span><span class="p">.</span><span class="n">GetHotkeyManager</span><span class="p">();</span><span class="w"></span>
+<a id="__codelineno-10-8" name="__codelineno-10-8"></a><span class="w">    </span><span class="n">Hotkey</span><span class="w"> </span><span class="n">hotkey</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">hotkeyManager</span><span class="p">.</span><span class="n">GetHotkeys</span><span class="p">().</span><span class="n">Find</span><span class="p">(</span><span class="n">Key</span><span class="p">.</span><span class="n">Space</span><span class="p">,</span><span class="w"> </span><span class="n">ModifierKeys</span><span class="p">.</span><span class="n">Control</span><span class="p">);</span><span class="w"></span>
+<a id="__codelineno-10-9" name="__codelineno-10-9"></a><span class="p">}</span><span class="w"></span>
+</code></pre></div>
+</td></tr></table>
+
+              
+            </article>
+          </div>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+        
+        <a href="../quickstart/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Quickstart" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              Quickstart
+            </div>
+          </div>
+        </a>
+      
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "..", "features": ["content.code.annotate"], "search": "../assets/javascripts/workers/search.5e67fbfe.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.c44cc438.min.js"></script>
+      
+    
+  </body>
+</html>
