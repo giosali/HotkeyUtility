@@ -13,7 +13,7 @@ namespace HotkeyUtility
         /// <summary>
         /// Hotkey is already registered.
         /// </summary>
-        internal const int ERROR_HOTKEY_ALREADY_REGISTERED = 0x581;
+        internal const int ERROR_HOTKEY_ALREADY_REGISTERED = 0x00000581;
 
         /// <summary>
         /// Defines a system-wide hotkey.
